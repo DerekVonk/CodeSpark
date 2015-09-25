@@ -18,7 +18,9 @@
         <h1><%= new Date() %></h1>
         <% String message = "Hello " + planet; %>
         <% String message2 = "wat doet dit hier? Laat ik dit even weghalen"; %>
+        <% String message3 = "wat doet dit hier? Laat ik dit even weghalen"; %>
         <h2><%= message %></h2>
         <h3><%= message2%></h3>
+        <h6><%= message3%>></h6>
     </body>
 </html>
