@@ -1,5 +1,6 @@
+package main;
+
 import googleResponse.AnnotateImageRequest;
-import googleResponse.BoundingPoly;
 import googleResponse.TextAnnotations;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -11,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+
+    private final String DELIMITER = "\n";
 
     public static void main(String[] args) {
 
@@ -25,14 +28,12 @@ public class Main {
             System.out.println(response);
 
             TextAnnotations[] textAnnotations = response.getTextAnnotations();
+            String description = textAnnotations[0].getDescription();
 
-            List<BoundingPoly> allPolygons = new ArrayList<>();
-            for (TextAnnotations textAnnotation : textAnnotations) {
-                allPolygons.add(textAnnotation.getBoundingPoly());
-            }
+                if (description.contains("\n")) {
+                    List<String> allWordsInDescription = parseToArray(description);
 
-            System.out.println(allPolygons.toString());
-
+                }
 
 
         } catch (JsonGenerationException e) {
@@ -43,6 +44,18 @@ public class Main {
             e.printStackTrace();
         }
 
+    }
+
+    public static List<String> parseToArray(String description) {
+        List<String> words = new ArrayList<>();
+
+        String[] split = description.split(DELIMITER);
+
+        for (String s : split) {
+            words.add(s);
+        }
+
+        return words;
     }
 
 }
