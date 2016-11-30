@@ -9,8 +9,6 @@ import utility.WordParser;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -19,24 +17,29 @@ public class Main {
 
     public static void main(String[] args) {
 
-
         ObjectMapper mapper = new ObjectMapper();
 
-        AnnotateImageRequest response = new AnnotateImageRequest();
+        AnnotateImageRequest response;
 
         try {
             // Convert JSON string from file to Object
             response = mapper.readValue(new File("./src/response.json"), AnnotateImageRequest.class);
-            System.out.println(response);
 
+            // retrieve all textAnnotations from the
             TextAnnotations[] textAnnotations = response.getTextAnnotations();
+
+            // retrieve the first of the textAnnotation vector. This is the object
+            // that contains the full description
             String description = textAnnotations[0].getDescription();
 
             List<String> allWordsInDescription = null;
-                if (description.contains("\n")) {
-                    allWordsInDescription = WordParser.parseToArray(description);
-                }
+            // check if the description indeed contains a string with '\n' delimiters to indicate
+            // that this description is indeed the one we want to parse
+            if (description.contains("\n")) {
+                    allWordsInDescription = WordParser.parseToWordArray(description);
+            }
 
+            // for debugging purpose
             for (String s : allWordsInDescription) {
                 System.out.println("Word = " + s);
             }
@@ -51,5 +54,4 @@ public class Main {
         }
 
     }
-
 }

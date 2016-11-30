@@ -7,7 +7,11 @@ public class WordParser {
 
     private static String DELIMITER = "\n";
 
-    public static List<String> parseToArray(String description) {
+    /**
+     * @param description string to be parsed
+     * @return List of Strings representing each delimiter seperated word from description
+     */
+    public static List<String> parseToWordArray(String description) {
         List<String> words = new ArrayList<>();
 
         String[] split = description.split(DELIMITER);
@@ -18,6 +22,4 @@ public class WordParser {
 
         return words;
     }
-
-
 }
