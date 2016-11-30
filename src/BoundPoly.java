@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class BoundPoly {
@@ -13,11 +14,16 @@ public class BoundPoly {
 
     public int getMaxY(BoundPoly rectangle) {
 
+        int result;
         List<Point> points = rectangle.getAllPoints();
 
+        int temp = 0;
         for (Point point : points) {
-            int y = point.getY();
+            if (temp == 0)
+                temp = point.getY();
+
         }
+
 
 
         return 0;

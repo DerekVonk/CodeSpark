@@ -1,3 +1,13 @@
+import googleResponse.AnnotateImageRequest;
+import googleResponse.BoundingPoly;
+import googleResponse.TextAnnotations;
+import googleResponse.Vertices;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -5,38 +15,57 @@ public class Main {
 
     public static void main(String[] args) {
 
-        int maxYfirst = maxY(1909, 1909, 2023, 2023);
-        int minYSecond = minY(1809, 1809, 1881, 1881);
-        int maxYthird = maxY(1358, 1358, 1779, 1779);
-        int maxYfourth = maxY(1846, 1846, 1907, 1907);
 
-        List<Point> boundPolyOne = new ArrayList<>();
-        boundPolyOne.add(new Point(708, 1846));
-        boundPolyOne.add(new Point(708, 1846));
-        boundPolyOne.add(new Point(778, 1907));
-        boundPolyOne.add(new Point(778, 1907));
+        ObjectMapper mapper = new ObjectMapper();
 
-        List<Point> boundPolyTwo = new ArrayList<>();
-        boundPolyOne.add(new Point(708, 1358));
-        boundPolyOne.add(new Point(708, 1358));
-        boundPolyOne.add(new Point(710, 1779));
-        boundPolyOne.add(new Point(651, 1779));
+        AnnotateImageRequest response = new AnnotateImageRequest();
 
-        if (maxYfirst > minYSecond) {
+        try {
+            // Convert JSON string from file to Object
+            response = mapper.readValue(new File("/Users/Vonk/Documents/Projects/CodeSpark/src/response.json"), AnnotateImageRequest.class);
+            System.out.println(response);
 
+            TextAnnotations[] textAnnotations = response.getTextAnnotations();
+
+            List<BoundingPoly> allPolygons = new ArrayList<>();
+            for (TextAnnotations textAnnotation : textAnnotations) {
+                allPolygons.add(textAnnotation.getBoundingPoly());
+
+            }
+
+            while (allPolygons.iterator().hasNext()) {
+                BoundingPoly next = allPolygons.iterator().next();
+
+                Vertices[] vertices = next.getVertices();
+
+                int[] yCoordinates = new int[4];
+                int count = 0;
+                int max = 0;
+                for (Vertices vertice : vertices) {
+                    int y = Integer.parseInt(vertice.getY());
+                    yCoordinates[0] = y;
+                    count++;
+                    max = Math.max(Math.max(Math.max(yCoordinates[0], yCoordinates[1]), yCoordinates[2]), yCoordinates[3]);
+                }
+
+                System.out.println("max of vertice is: " + max);
+                allPolygons.iterator().remove();
+
+            }
+
+            System.out.println(allPolygons.toString());
+
+
+
+        } catch (JsonGenerationException e) {
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-
-        List<Integer> lines = new ArrayList<>();
-
-
-
-        System.out.println("Hello World!");
     }
-
-
-
-
 
 
     public static int maxY(int a, int b, int c, int d) {
