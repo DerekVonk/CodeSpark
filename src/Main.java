@@ -1,7 +1,6 @@
 import googleResponse.AnnotateImageRequest;
 import googleResponse.BoundingPoly;
 import googleResponse.TextAnnotations;
-import googleResponse.Vertices;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -30,27 +29,6 @@ public class Main {
             List<BoundingPoly> allPolygons = new ArrayList<>();
             for (TextAnnotations textAnnotation : textAnnotations) {
                 allPolygons.add(textAnnotation.getBoundingPoly());
-
-            }
-
-            while (allPolygons.iterator().hasNext()) {
-                BoundingPoly next = allPolygons.iterator().next();
-
-                Vertices[] vertices = next.getVertices();
-
-                int[] yCoordinates = new int[4];
-                int count = 0;
-                int max = 0;
-                for (Vertices vertice : vertices) {
-                    int y = Integer.parseInt(vertice.getY());
-                    yCoordinates[0] = y;
-                    count++;
-                    max = Math.max(Math.max(Math.max(yCoordinates[0], yCoordinates[1]), yCoordinates[2]), yCoordinates[3]);
-                }
-
-                System.out.println("max of vertice is: " + max);
-                allPolygons.iterator().remove();
-
             }
 
             System.out.println(allPolygons.toString());
@@ -66,18 +44,5 @@ public class Main {
         }
 
     }
-
-
-    public static int maxY(int a, int b, int c, int d) {
-
-        return Math.max(Math.max(Math.max(a, b), c),d);
-    }
-
-    public static int minY(int a, int b, int c, int d) {
-
-        return Math.min(Math.min(Math.min(a, b), c),d);
-    }
-
-
 
 }
