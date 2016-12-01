@@ -13,8 +13,6 @@ import java.util.List;
 
 public class Main {
 
-    private final String DELIMITER = "\n";
-
     public static void main(String[] args) {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -30,20 +28,15 @@ public class Main {
 
             // retrieve the first of the textAnnotation vector. This is the object
             // that contains the full description
-            String description = textAnnotations[0].getDescription();
+            String fullDescription = textAnnotations[0].getDescription();
 
-            List<String> allWordsInDescription = null;
-            // check if the description indeed contains a string with '\n' delimiters to indicate
-            // that this description is indeed the one we want to parse
-            if (description.contains("\n")) {
-                    allWordsInDescription = WordParser.parseToWordArray(description);
+            // parse the fullDescription to an ArrayList of separated Entities
+            List<String> allEntityAnnotations = WordParser.parseToWordArray(fullDescription);
+
+            // send to system out
+            for (String s : allEntityAnnotations) {
+                System.out.println("EntityAnnotation's description = " + s);
             }
-
-            // for debugging purpose
-            for (String s : allWordsInDescription) {
-                System.out.println("Word = " + s);
-            }
-
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
