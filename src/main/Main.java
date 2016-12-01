@@ -5,36 +5,38 @@ import googleResponse.TextAnnotations;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import utility.WordParser;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
 
-    private final String DELIMITER = "\n";
-
     public static void main(String[] args) {
-
 
         ObjectMapper mapper = new ObjectMapper();
 
-        AnnotateImageRequest response = new AnnotateImageRequest();
+        AnnotateImageRequest response;
 
         try {
             // Convert JSON string from file to Object
-            response = mapper.readValue(new File("/Users/Vonk/Documents/Projects/CodeSpark/src/response.json"), AnnotateImageRequest.class);
-            System.out.println(response);
+            response = mapper.readValue(new File("./src/response.json"), AnnotateImageRequest.class);
 
+            // retrieve all textAnnotations from the
             TextAnnotations[] textAnnotations = response.getTextAnnotations();
-            String description = textAnnotations[0].getDescription();
 
-                if (description.contains("\n")) {
-                    List<String> allWordsInDescription = parseToArray(description);
+            // retrieve the first of the textAnnotation vector. This is the object
+            // that contains the full description
+            String fullDescription = textAnnotations[0].getDescription();
 
-                }
+            // parse the fullDescription to an ArrayList of separated Entities
+            List<String> allEntityAnnotations = WordParser.parseToWordArray(fullDescription);
 
+            // send to system out
+            for (String s : allEntityAnnotations) {
+                System.out.println("EntityAnnotation's description = " + s);
+            }
 
         } catch (JsonGenerationException e) {
             e.printStackTrace();
@@ -45,17 +47,4 @@ public class Main {
         }
 
     }
-
-    public static List<String> parseToArray(String description) {
-        List<String> words = new ArrayList<>();
-
-        String[] split = description.split(DELIMITER);
-
-        for (String s : split) {
-            words.add(s);
-        }
-
-        return words;
-    }
-
 }
