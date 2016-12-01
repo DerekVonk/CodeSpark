@@ -1,12 +1,13 @@
 package googleResponse;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TextAnnotations
 {
     private String description;
 
     private String locale;
-
-    private BoundingPoly boundingPoly;
 
     public String getDescription ()
     {
@@ -28,19 +29,9 @@ public class TextAnnotations
         this.locale = locale;
     }
 
-    public BoundingPoly getBoundingPoly ()
-    {
-        return boundingPoly;
-    }
-
-    public void setBoundingPoly (BoundingPoly boundingPoly)
-    {
-        this.boundingPoly = boundingPoly;
-    }
-
     @Override
     public String toString()
     {
-        return "ClassPojo [description = "+description+", locale = "+locale+", boundingPoly = "+boundingPoly+"]";
+        return "ClassPojo TextAnnotations: [description = " + description + ", locale = " + locale + "]";
     }
 }
