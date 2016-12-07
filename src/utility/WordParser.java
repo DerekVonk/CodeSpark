@@ -1,7 +1,6 @@
 package utility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class WordParser {
@@ -25,7 +24,6 @@ public class WordParser {
         for (String s : split) {
             result.add(s);
         }
-
         return result;
     }
 
@@ -35,7 +33,7 @@ public class WordParser {
      * @param description string to be parsed
      * @return String result of description without the DELIMITER
      */
-    public static String removeDelimiter(String description) {
+    private static String removeDelimiter(String description) {
         return description.replace(DELIMITER, "");
     }
 
