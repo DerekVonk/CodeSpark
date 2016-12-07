@@ -1,0 +1,13 @@
+This repository is for tryouts.
+
+The master branch is a base branch with a simple main class.
+
+If you want to do a new tryout/sandbox/testing/tutorial
+
+create a new branch with the name of the project and work on that branch.
+
+-----------------------------------------
+Don't merge into the master branch!!
+-----------------------------------------
+
+Remind yourself to list existing branches to see if there is anything you've forgotten.
