@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class DayOne {
 
@@ -34,13 +36,8 @@ public class DayOne {
     }
 
     public int calculateSecondSum() {
-
-        List<Integer> ints = new ArrayList<>();
-
-        for (int i = 0; i < integers.length; i++) {
-            ints.add(integers[i]);
-        }
-        int size = ints.size();
+        // using Java 8 streams.
+        List<Integer> intList = Arrays.stream(integers).boxed().collect(Collectors.toList());
 
         for (int start = 0; start < integers.length; start++) {
 
