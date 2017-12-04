@@ -140,8 +140,6 @@ public class DayTwo {
 
 
     private void sortArrayInDescendingOrder() {
-        int[] sorted = new int[spreadsheet.length];
-
         for (int i = 0; i < spreadsheet.length; i++) {
             // sort inner array in descending order
             for (int j = 0; j < spreadsheet[i].length; j++) {
@@ -150,14 +148,12 @@ public class DayTwo {
         }
 
         for (int i = 0; i < spreadsheet.length; i++) {
-            sorted = IntStream.of(spreadsheet[i])
+            spreadsheet[i] = IntStream.of(spreadsheet[i])
                     .boxed()
                     .sorted(Comparator.reverseOrder())
                     .mapToInt(a -> a)
                     .toArray();
-            spreadsheet[i] = sorted;
             }
-
         }
     }
 
