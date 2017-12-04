@@ -1,9 +1,13 @@
 package main;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DayOne {
 
     int[] integers;
     public int sum;
+    ArrayList<Integer> listOfIntegers;
 
     public DayOne(String input) {
         this.processInput(input);
@@ -25,6 +29,22 @@ public class DayOne {
                 sum += integers[i];
             }
         }
+        return sum;
+    }
+
+    public int calculateSecondSum() {
+        listOfIntegers = new ArrayList(Arrays.asList(integers));
+        int halfway = integers.length/2;
+
+        for (int start = 0; start < integers.length; start++) {
+
+            for (int i = 0; i < integers.length; i++) {
+                int result = integers[(i + start) % integers.length];
+                int a = 0;
+            }
+
+        }
+
         return sum;
     }
 }
