@@ -11,3 +11,24 @@ Don't merge into the master branch!!
 -----------------------------------------
 
 Remind yourself to list existing branches to see if there is anything you've forgotten.
+
+=======================================================================================================================
+
+in order to run this program from the command line:
+
+navigate in terminal to src/main
+
+    $ javac Main.java
+
+this will compile the Main.java class in to Java bytecode so it can be executed by the JVM
+
+in order to run the program you have to define the CLASSPATH with the -cp flag on the 'java' command
+line call.
+
+First cd to the src package (one dir up):
+
+    $ java -cp ./ main.Main
+
+You set the CLASSPATH with the -cp flag, then define the classpath as being in the current directory.
+This means that you notify the JVM that the compiled .class file is in this directory (the path to the class file)
+because you're now in the 'src' dir, you have to run the Main class WITH the package name 'main'
