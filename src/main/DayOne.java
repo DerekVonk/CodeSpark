@@ -38,6 +38,7 @@ public class DayOne {
     public int calculateSecondSum() {
         // using Java 8 streams.
         List<Integer> intList = Arrays.stream(integers).boxed().collect(Collectors.toList());
+        List circularList = new CircularArrayList(intList);
 
         for (int start = 0; start < integers.length; start++) {
 
