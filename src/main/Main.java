@@ -11,5 +11,9 @@ public class Main {
         DayOne puzzle2 = new DayOne(puzzle);
         System.out.println("The answer of the second puzzle is: " + puzzle2.calculateSecondSum());
 
+        DayTwo corruptionChecksum = new DayTwo("dayTwoInput.txt");
+
+        System.out.println("Answer of day two corruption checksum is: " + corruptionChecksum.calculateFirstChecksum());
+
     }
 }
