@@ -4,6 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Don't use this branch for projects!! -> README");
+        System.out.println("New Branch for New Projects!! -> README");
     }
 }
