@@ -133,7 +133,6 @@ public class DayTwo {
             e.printStackTrace();
         }
 
-        // add to sum
         return sum;
     }
 
