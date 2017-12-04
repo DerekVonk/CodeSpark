@@ -31,6 +31,8 @@ public class Main {
         String test8 = "123123"; // should produce 12
         String test9 = "12131415"; // should produce 4
 
+        DayOne dayOne5 = new DayOne(test5);
+        System.out.println("The answer of the puzzle is: " + dayOne5.calculateSecondSum());
 
     }
 }
