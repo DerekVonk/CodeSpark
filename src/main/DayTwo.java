@@ -92,20 +92,18 @@ public class DayTwo {
         for (int i = 0; i < spreadsheet.length; i++) {
             for (int j = 0; j < spreadsheet[i].length; j++) {
                 Arrays.sort(spreadsheet[j]);
-            }
-        }
 
-        for (int i = 0; i < spreadsheet.length; i++) {
-            for (int j = 0; j < spreadsheet[i].length; j++) {
+                // retrieve smallest and largest numbers
                 largest = spreadsheet[i][ spreadsheet[j].length - 1 ];
                 smallest = spreadsheet[i][0];
             }
+
+            // add to sum
             sum += largest - smallest;
             System.out.println("Row's largest and smallest values are " + largest + " and " + smallest
                     + " and their difference is " + (largest - smallest));
             System.out.println("New checksum is: " + (sum));
         }
-
 
         return sum;
     }
