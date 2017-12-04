@@ -114,29 +114,36 @@ public class DayTwo {
     public int calculateSecondChecksum() {
         sortArrayInDescendingOrder();
 
-        int firstnumber = 0;
-        int secondnumber = 0;
-        try {
-            for (int i = 0; i < spreadsheet.length; i++) {
-                for (int j = 0; j < spreadsheet[i].length - 1; j++) {
+        for (int i = 0; i < spreadsheet.length; i++) {
+            // You need to iterate within each subarray.
+            int[] inner = spreadsheet[i];
+            for (int k = 0; k < inner.length; k++) {
+                int current = inner[k];
 
-                    // if two indices are evenly divisible, add the division result to sum
-                    firstnumber = spreadsheet[i][0];
-                    secondnumber = spreadsheet[i][j + 1];
+                // copy the remaining items in the array to a new array for iterating
+                int[] subInner = Arrays.copyOfRange(inner, k + 1, inner.length);
 
-                    if ((firstnumber + secondnumber % 2) == 0) {
-                        sum += firstnumber / secondnumber;
+                for (int n = 0; n < subInner.length; n++) {
+                    int comparedTo = subInner[n]; // current value that "current" is comparing itself to
+//                    System.out.println("array " + (i + 1) + " compare " + current + " to " + comparedTo);
+
+                    try {
+                        // add only the result of the division of two integers that evenly divide to sum
+                        if (current % comparedTo == 0) {
+                            System.out.println(" -- hit --");
+                            System.out.println("array " + (i + 1) + " compare " + current + " to " + comparedTo);
+                            sum += current / comparedTo;
+                        }
+                    } catch (ArithmeticException e) {
+                        System.out.println("Can't divide by Zero... skipping");
+                        continue;
                     }
                 }
             }
-        } catch (ArithmeticException e) {
-            e.printStackTrace();
         }
 
         return sum;
     }
-
-
 
     private void sortArrayInDescendingOrder() {
         for (int i = 0; i < spreadsheet.length; i++) {
