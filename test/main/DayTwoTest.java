@@ -11,4 +11,10 @@ public class DayTwoTest {
         DayTwo test1 = new DayTwo("corruptionChecksumTest.txt");
         assertEquals(18, test1.calculateFirstChecksum());
     }
+
+    @Test
+    public void calculateSecondChecksum() {
+        DayTwo test1 = new DayTwo("corruptionChecksumSecondTest.txt");
+        assertEquals(9, test1.calculateSecondChecksum());
+    }
 }

@@ -2,6 +2,9 @@ package main;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.stream.IntStream;
 
 public class DayTwo {
 
@@ -107,4 +110,56 @@ public class DayTwo {
 
         return sum;
     }
-}
+
+    public int calculateSecondChecksum() {
+        sortArrayInDescendingOrder();
+
+        int firstnumber = 0;
+        int secondnumber = 0;
+        try {
+            for (int i = 0; i < spreadsheet.length; i++) {
+                for (int j = 0; j < spreadsheet[i].length - 1; j++) {
+
+                    // if two indices are evenly divisible, add the division result to sum
+                    firstnumber = spreadsheet[i][0];
+                    secondnumber = spreadsheet[i][j + 1];
+
+                    if ((firstnumber + secondnumber % 2) == 0) {
+                        sum += firstnumber / secondnumber;
+                    }
+                }
+            }
+        } catch (ArithmeticException e) {
+            e.printStackTrace();
+        }
+
+        // add to sum
+        return sum;
+    }
+
+
+
+    private void sortArrayInDescendingOrder() {
+        int[] sorted = new int[spreadsheet.length];
+
+        for (int i = 0; i < spreadsheet.length; i++) {
+            // sort inner array in descending order
+            for (int j = 0; j < spreadsheet[i].length; j++) {
+                Arrays.sort(spreadsheet[j]);
+            }
+        }
+
+        for (int i = 0; i < spreadsheet.length; i++) {
+            sorted = IntStream.of(spreadsheet[i])
+                    .boxed()
+                    .sorted(Comparator.reverseOrder())
+                    .mapToInt(a -> a)
+                    .toArray();
+            spreadsheet[i] = sorted;
+            }
+
+        }
+    }
+
+
+
