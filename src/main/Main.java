@@ -32,7 +32,22 @@ public class Main {
         String test9 = "12131415"; // should produce 4
 
         DayOne dayOne5 = new DayOne(test5);
-        System.out.println("The answer of the puzzle is: " + dayOne5.calculateSecondSum());
+        System.out.println("The answer of the test5 is: " + dayOne5.calculateSecondSum());
+
+        DayOne dayOne6 = new DayOne(test6);
+        System.out.println("The answer of the test5 is: " + dayOne6.calculateSecondSum());
+
+        DayOne dayOne7 = new DayOne(test7);
+        System.out.println("The answer of the test5 is: " + dayOne7.calculateSecondSum());
+
+        DayOne dayOne8 = new DayOne(test8);
+        System.out.println("The answer of the test5 is: " + dayOne8.calculateSecondSum());
+
+        DayOne dayOne9 = new DayOne(test9);
+        System.out.println("The answer of the test5 is: " + dayOne9.calculateSecondSum());
+
+        DayOne puzzle2 = new DayOne(puzzle);
+        System.out.println("The answer of the test5 is: " + puzzle2.calculateSecondSum());
 
     }
 }

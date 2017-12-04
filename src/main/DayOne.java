@@ -1,12 +1,5 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Queue;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-
 public class DayOne {
 
     int[] integers;
@@ -36,21 +29,22 @@ public class DayOne {
     }
 
     public int calculateSecondSum() {
-        // using Java 8 streams.
-        List<Integer> intList = Arrays.stream(integers).boxed().collect(Collectors.toList());
-        List circularList = new CircularArrayList(intList);
+        int halfway = integers.length / 2;
+        int realIndex = 0;
 
-        for (int start = 0; start < integers.length; start++) {
+        for (int i = 0; i < integers.length; i++) {
+                try {
+                    if (integers[i] == integers[i + halfway]) {
+                        sum += integers[i];
+                    }
+                } catch (IndexOutOfBoundsException e) {
+                    realIndex = (i + halfway) - integers.length;
 
-            for (int i = 0; i < integers.length; i++) {
-
-
-                int result = integers[(i + start) % integers.length];
-                int a = 0;
+                    if (integers[i] == integers[realIndex]) {
+                        sum += integers[i];
+                    }
+                }
             }
-
-        }
-
         return sum;
     }
 }
