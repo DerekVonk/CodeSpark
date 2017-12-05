@@ -39,15 +39,14 @@ public class DayThree {
 
         for (int i = 0; i < matrix.length; i++) {
 
-            for (int k = 0; k < matrix.length; k++) {
+            for (int k = 0; k < 2; k++) {
 
-//                for (int j = 0; j < 2; j++) {
                     do {
                         // write and increment value to current position
                         matrix[x][y] = value;
+                        System.out.println("position ("+x+","+y+") filled with value: " + value);
                         value++;
                         // log
-                        System.out.println("position ("+x+","+y+") filled with value: " + value);
 
                         // store current position in movement
                         movement[c] = new int[] {x, y};
