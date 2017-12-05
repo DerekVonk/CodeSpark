@@ -14,8 +14,12 @@ public class Main {
 //        DayTwo corruptionChecksum = new DayTwo("dayTwoInput.txt");
 //        System.out.println("Answer of day two corruption checksum is: " + corruptionChecksum.calculateFirstChecksum());
 
-        DayTwo corruptionChecksum2 = new DayTwo("dayTwoInput.txt");
-        System.out.println("Answer of day two corruption checksum is: " + corruptionChecksum2.calculateSecondChecksum());
+//        DayTwo corruptionChecksum2 = new DayTwo("dayTwoInput.txt");
+//        System.out.println("Answer of day two corruption checksum is: " + corruptionChecksum2.calculateSecondChecksum());
+
+        DayThree three = new DayThree(5);
+        int[][] spiralMatrix = three.spiralMatrix;
+        int a;
 
     }
 }
