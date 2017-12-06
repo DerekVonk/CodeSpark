@@ -22,95 +22,59 @@ public class DayThree {
 
         int x = 0; // current position; x
         int y = 0; // current position; y
-//        int dir = 0; // current direction; 0=RIGHT, 1=DOWN, 2=LEFT, 3=UP
+        int[] direction = {1,0}; // direction is to the right
         int c = 0; // counter
-//        int s = 1;
         int value = 1; // current value being inserted
-        int steps = 1;
-        int movements = 1;
 
-        // starting point
+        int[] nextCoordinate;
+
+        int steps = 1;
+
+        // determine starting point for matrix
         x = (int) (Math.floor(matrix.length / 2.0));
         y = (int) (Math.floor(matrix.length / 2.0));
 
-        int[] direction = new int[] {1, 0}; // initial direction is to the right
-
-        int[][] movement = new int[(int) Math.pow(matrix.length, 2)][];
-
         for (int i = 0; i < matrix.length; i++) {
 
-            for (int k = 0; k < 2; k++) {
+            for (int j = 0; j < matrix[i].length; j++) {
 
-                    do {
-                        // write and increment value to current position
+                for (int rep = 1; rep <= 2; rep++) {
+
+                    // odd matrix needs only one row added, not a new column
+                    if (i == matrix.length - 1) {
+                        break;
+                    }
+
+                    for (int move = 0; move < steps; move++) {
                         matrix[x][y] = value;
-                        System.out.println("position ("+x+","+y+") filled with value: " + value);
+                        System.out.println("coordinate (" + x + "," + y + ") is filled with " + value);
                         value++;
-                        // log
 
-                        // store current position in movement
-                        movement[c] = new int[] {x, y};
-                        c++;
-                        x += 1;
-                        steps++;
-                    } while (steps < movements);
+                        nextCoordinate = moveCoordinate(direction, x, y);
+                        x = nextCoordinate[0];
+                        y = nextCoordinate[1];
+                    }
+                    direction = rotateCCW(direction);
 
-                movements += 1;
-                direction = rotateCCW(direction);
+                }
+                steps++;
             }
         }
 
-
-//        for (int i = 0; i < matrix.length; i++) {
-//
-//            for (int j = 2; j > 0; j--) {
-//                // for odd matrices only. On last iteration, only one direction change is needed.
-//                if (i == matrix.length -1 && j == 1) {
-//                    break;
-//                }
-//
-//                for (int k = 0; k < s; i++) {
-//
-//                    matrix[x][y] = value++;
-//                    System.out.println("Matrix point (" + x + "," + y + ") ");
-//                    c++;
-//
-//                }
-//            }
-//            s++;
-//        }
-
-
-//        for (int k = 0; k < matrix.length; k++) {
-//
-//            for (int j = 0; j < matrix.length; j++) {
-//
-//                for (int i = 0; i < s; i++) ; {
-//
-//                    matrix[x][y] = value++;
-//                    System.out.println("Matrix point (" + x + "," + y + ") ");
-//                    c++;
-//
-//                    switch (dir) {
-//                        case RIGHT: x = x + 1; break;
-//                        case DOWN: y = y + 1; break;
-//                        case LEFT: x = x - 1; break;
-//                        case UP: y = y - 1; break;
-//                    }
-//                }
-//                dir = (dir + 1) % 4;
-//            }
-//            s++;
-//        }
-        System.out.println(c + " times");
+        System.out.println("wrote " + c + " values to matrix");
         return matrix;
     }
 
     private int[] rotateCCW(int[] direction) {
-        int temp = direction[1];
-        direction[1] = direction[-0];
-        direction[0] = temp;
+        int temp = direction[0];
+        direction[0] = direction[1];
+        direction[1] = -temp;
         return direction;
+    }
+
+    private int[] moveCoordinate(int[] direction, int x, int y) {
+
+        return new int[]{direction[0] + x, direction[1] + y};
     }
 
     public int getShortestPath(int square) {
