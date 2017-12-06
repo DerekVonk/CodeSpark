@@ -9,6 +9,7 @@ public class DayThree {
     public static final int UP = 3;
 
     int[][] spiralMatrix;
+    int[][] coordinates;
 
     public DayThree(int n) {
         this.spiralMatrix = initMatrix(new int[n][n]);
@@ -23,45 +24,60 @@ public class DayThree {
         int x = 0; // current position; x
         int y = 0; // current position; y
         int[] direction = {1,0}; // direction is to the right
-        int c = 0; // counter
         int value = 1; // current value being inserted
 
-        int[] nextCoordinate;
-
-        int steps = 1;
-
-        // determine starting point for matrix
+        // determine starting coordinate for matrix
         x = (int) (Math.floor(matrix.length / 2.0));
         y = (int) (Math.floor(matrix.length / 2.0));
 
-        for (int i = 0; i < matrix.length; i++) {
+        // array for storing next coordinate
+        int[] nextCoordinate;
+        // array for storing sequential coordinates with initial size of matrix.length to the power 2
+        coordinates = new int[(int) Math.pow(matrix.length, 2.0)][];
+        // counter for coordinate to be added
+        int counter = 0;
+        // initial amount of movements before rotating the matrix
+        int steps = 1;
 
-            for (int j = 0; j < matrix[i].length; j++) {
+        // loop over each coordinate
+        outer:
+        for (int row = 0; row < matrix.length; row++) {
 
-                for (int rep = 1; rep <= 2; rep++) {
+            for (int column = 0; column < matrix.length; column++) {
 
-                    // odd matrix needs only one row added, not a new column
-                    if (i == matrix.length - 1) {
-                        break;
+                // repeat number of steps and rotation twice
+                for (int repetition = 0; repetition < 2; repetition++) {
+
+                    // for the odd matrix needs only one row added, not a new column
+                    if (column == matrix.length - 1 && repetition == 1) {
+                        break outer;
                     }
 
-                    for (int move = 0; move < steps; move++) {
-                        matrix[x][y] = value;
-                        System.out.println("coordinate (" + x + "," + y + ") is filled with " + value);
-                        value++;
+                    // loop over number of steps remaining
+                    for (int k = 0; k < steps; k++) {
 
+                        // write current value to matrix
+                        matrix[x][y] = value;
+                        System.out.println("coordinate (" + x + "," + y + ") is filled with " + value++);
+//                        value++;
+
+                        // save current coordinate to array for later reference
+                        coordinates[counter++] = new int[] {x, y};
+
+                        // move to next position
                         nextCoordinate = moveCoordinate(direction, x, y);
                         x = nextCoordinate[0];
                         y = nextCoordinate[1];
                     }
-                    direction = rotateCCW(direction);
 
+                    // rotate matrix after steps have completed
+                    direction = rotateCCW(direction);
                 }
                 steps++;
             }
         }
 
-        System.out.println("wrote " + c + " values to matrix");
+        System.out.println("wrote " + counter + " values to matrix");
         return matrix;
     }
 
@@ -77,8 +93,30 @@ public class DayThree {
         return new int[]{direction[0] + x, direction[1] + y};
     }
 
-    public int getShortestPath(int square) {
+    public int getShortestPath() {
+
         return 0;
+    }
+
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+
+        int[] currentCoordinate;
+        for (int i = 0; i < coordinates.length; i++) {
+
+            currentCoordinate = coordinates[i];
+            builder.append(spiralMatrix[currentCoordinate[0]][currentCoordinate[1]]);
+
+            if (i == coordinates.length -1) {
+                break;
+            }
+
+            builder.append(",");
+        }
+
+        return builder.toString();
     }
 
 }

@@ -19,7 +19,10 @@ public class Main {
 
         DayThree three = new DayThree(5);
         int[][] spiralMatrix = three.spiralMatrix;
-        int a;
+
+        String s = three.toString();
+
+        System.out.println("Answer of day three = " + three.getShortestPath());
 
     }
 }
