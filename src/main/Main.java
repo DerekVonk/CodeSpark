@@ -17,8 +17,9 @@ public class Main {
 //        DayTwo corruptionChecksum2 = new DayTwo("dayTwoInput.txt");
 //        System.out.println("Answer of day two corruption checksum is: " + corruptionChecksum2.calculateSecondChecksum());
 
-        DayThree three = new DayThree(601);
+        DayThree three = new DayThree(501);
         System.out.println("The manhattand distance to the center is " + three.getShortestPath(265149));
+        three.getFirstValueLarger(265149);
 
     }
 }

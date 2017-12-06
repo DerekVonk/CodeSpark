@@ -1,9 +1,12 @@
 package main;
 
+import java.util.Arrays;
+
 public class DayThree {
 
-    int[][] spiralMatrix;
-    int[][] coordinates;
+    private int[][] spiralMatrix;
+    private int[][] coordinates;
+    private int[][] secondMatrixCoordinates;
 
     public DayThree(int n) {
         if (n % 2 == 0) {
@@ -140,4 +143,124 @@ public class DayThree {
         return builder.toString();
     }
 
+    private void clearGrid(int n) {
+        spiralMatrix = new int[n][n];
+    }
+
+    public int getFirstValueLarger(int input) {
+        clearGrid(spiralMatrix.length);
+
+        spiralMatrix = initSecondMatrix(spiralMatrix);
+
+        int[] coordinate = locateCoordinate(input);
+
+        int[] nextCoordinate = null;
+        int result = 0;
+        for (int i = 0; i < secondMatrixCoordinates.length; i++) {
+
+            if (Arrays.equals(coordinate, secondMatrixCoordinates[i])) {
+                nextCoordinate = secondMatrixCoordinates[i+1];
+                result = spiralMatrix[nextCoordinate[0]][nextCoordinate[1]];
+            }
+
+        }
+
+        return result;
+    }
+
+    private int[][] initSecondMatrix(int[][] spiralMatrix) {
+
+        int x = 0; // current position; x
+        int y = 0; // current position; y
+        int[] direction = {1,0}; // direction is to the right
+        int value = 1; // current value being inserted
+        int nextValue = 1;
+
+        // determine starting coordinate for matrix
+        x = (int) (Math.floor(spiralMatrix.length / 2.0));
+        y = (int) (Math.floor(spiralMatrix.length / 2.0));
+
+        // array for storing next coordinate
+        int[] nextCoordinate;
+        // array for storing sequential coordinates with initial size of matrix.length to the power 2
+        secondMatrixCoordinates = new int[(int) Math.pow(spiralMatrix.length, 2.0)][];
+        // counter for coordinate to be added
+        int counter = 0;
+        // initial amount of movements before rotating the matrix
+        int steps = 1;
+
+        // loop over each coordinate
+        outer:
+        for (int row = 0; row < spiralMatrix.length; row++) {
+
+            for (int column = 0; column < spiralMatrix.length; column++) {
+
+                // repeat number of steps and rotation twice
+                for (int repetition = 0; repetition < 2; repetition++) {
+
+                    // for the odd matrix needs only one row added, not a new column
+                    if (column == spiralMatrix.length - 1 && repetition == 1) {
+                        break outer;
+                    }
+
+                    // loop over number of steps remaining
+                    for (int k = 0; k < steps; k++) {
+
+                        // write current value to matrix
+                        spiralMatrix[x][y] = value;
+                        System.out.println("coordinate (" + x + "," + y + ") is filled with " + value);
+
+                        // save current coordinate to array for later reference
+                        secondMatrixCoordinates[counter] = new int[] {x, y};
+
+                        // increase counter
+                        counter++;
+
+                        // move to next position
+                        nextCoordinate = moveCoordinate(direction, x, y);
+                        x = nextCoordinate[0];
+                        y = nextCoordinate[1];
+
+                        // calculate next value;
+                        value = sumOfAdjacentSquares(spiralMatrix, nextCoordinate);
+                    }
+
+                    // rotate matrix after steps have completed
+                    direction = rotateCCW(direction);
+                }
+                steps++;
+            }
+        }
+
+        System.out.println("wrote " + counter + " values to second matrix");
+        return spiralMatrix;
+    }
+
+    private int sumOfAdjacentSquares(int[][] matrix, int[] coordinate) {
+
+        Integer sum = 0;
+
+        int up = getCoordinateValue(matrix, coordinate[0], coordinate[1]-1);
+        int upRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]-1);
+        int right = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]);
+        int downRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]+1);
+        int down = getCoordinateValue(matrix, coordinate[0], coordinate[1]+1);
+        int downLeft = getCoordinateValue(matrix, coordinate[0] - 1, coordinate[1] + 1);
+        int left = getCoordinateValue(matrix, coordinate[0]-1, coordinate[1]);
+        int upLeft = getCoordinateValue(matrix, coordinate[0]- 1, coordinate[1] - 1);
+
+        sum += up + upRight + right + downRight + down + downLeft + left + upLeft;
+
+        return (sum.equals(0)) ? 1 : sum;
+    }
+
+    private int getCoordinateValue(int[][] matrix, int x, int y) {
+        try {
+            // if we want to retrieve a coordinate which doesn't exist we assume it's value is 0
+            return matrix[x][y];
+        } catch (IndexOutOfBoundsException e){
+            return 0;
+        }
+
+    }
 }
