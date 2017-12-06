@@ -2,16 +2,13 @@ package main;
 
 public class DayThree {
 
-    public int steps;
-    public static final int RIGHT = 0;
-    public static final int DOWN = 1;
-    public static final int LEFT = 2;
-    public static final int UP = 3;
-
     int[][] spiralMatrix;
     int[][] coordinates;
 
     public DayThree(int n) {
+        if (n % 2 == 0) {
+            throw new UnsupportedOperationException("This class doesn't support even matrices");
+        }
         this.spiralMatrix = initMatrix(new int[n][n]);
     }
 
@@ -59,7 +56,6 @@ public class DayThree {
                         // write current value to matrix
                         matrix[x][y] = value;
                         System.out.println("coordinate (" + x + "," + y + ") is filled with " + value++);
-//                        value++;
 
                         // save current coordinate to array for later reference
                         coordinates[counter++] = new int[] {x, y};
@@ -93,9 +89,35 @@ public class DayThree {
         return new int[]{direction[0] + x, direction[1] + y};
     }
 
-    public int getShortestPath() {
+    public int getShortestPath(int input) {
+        int[] coordinate = null;
 
-        return 0;
+        coordinate = locateCoordinate(input);
+
+        if (coordinate == null) {
+            throw new NullPointerException("Value " + input + " doesn't exist in this array");
+        }
+
+        // determine starting coordinate for matrix
+        int x = (int) (Math.floor(spiralMatrix.length / 2.0));
+        int y = (int) (Math.floor(spiralMatrix.length / 2.0));
+
+        // calculate sum of the absolute values of the horizontal and vertical distance
+        return Math.abs(coordinate[0] - x) + Math.abs(coordinate[1]-y);
+    }
+
+    private int[] locateCoordinate(int value) throws NullPointerException {
+        int[] result = null;
+
+        for (int i = 0; i < spiralMatrix.length; i++) {
+            for (int j = 0; j < spiralMatrix.length; j++) {
+
+                if (spiralMatrix[i][j] == value) {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        return result;
     }
 
     @Override
@@ -112,7 +134,6 @@ public class DayThree {
             if (i == coordinates.length -1) {
                 break;
             }
-
             builder.append(",");
         }
 
