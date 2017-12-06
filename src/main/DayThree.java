@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class DayThree {
 
     private int[][] spiralMatrix;
+    private long[][] longSpiralMatrix;
     private int[][] coordinates;
     private int[][] secondMatrixCoordinates;
 
@@ -143,14 +144,27 @@ public class DayThree {
         return builder.toString();
     }
 
-    private void clearGrid(int n) {
+    private long[][] clearGrid(int n) {
         spiralMatrix = new int[n][n];
+
+        longSpiralMatrix = new long[n][n];
+
+        for (int i = 0; i < spiralMatrix.length; i++) {
+            for (int j = 0; j < spiralMatrix[i].length; j++) {
+
+                longSpiralMatrix[i][j] = spiralMatrix[i][j];
+
+            }
+        }
+
+        return longSpiralMatrix;
+
     }
 
     public int getFirstValueLarger(int input) {
-        clearGrid(spiralMatrix.length);
+        long[][] longs = clearGrid(spiralMatrix.length);
 
-        spiralMatrix = initSecondMatrix(spiralMatrix);
+        initSecondMatrix(longs);
 
         int[] coordinate = locateCoordinate(input);
 
@@ -168,12 +182,12 @@ public class DayThree {
         return result;
     }
 
-    private int[][] initSecondMatrix(int[][] spiralMatrix) {
+    private long[][] initSecondMatrix(long[][] spiralMatrix) {
 
         int x = 0; // current position; x
         int y = 0; // current position; y
         int[] direction = {1,0}; // direction is to the right
-        int value = 1; // current value being inserted
+        long value = 1; // current value being inserted
         int nextValue = 1;
 
         // determine starting coordinate for matrix
@@ -222,7 +236,7 @@ public class DayThree {
                         y = nextCoordinate[1];
 
                         // calculate next value;
-                        value = sumOfAdjacentSquares(spiralMatrix, nextCoordinate);
+                        value = sumOfAdjacentSquares(longSpiralMatrix, nextCoordinate);
                     }
 
                     // rotate matrix after steps have completed
@@ -236,25 +250,25 @@ public class DayThree {
         return spiralMatrix;
     }
 
-    private int sumOfAdjacentSquares(int[][] matrix, int[] coordinate) {
+    private long sumOfAdjacentSquares(long[][] matrix, int[] coordinate) {
 
-        Integer sum = 0;
+        Long sum = 0l;
 
-        int up = getCoordinateValue(matrix, coordinate[0], coordinate[1]-1);
-        int upRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]-1);
-        int right = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]);
-        int downRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]+1);
-        int down = getCoordinateValue(matrix, coordinate[0], coordinate[1]+1);
-        int downLeft = getCoordinateValue(matrix, coordinate[0] - 1, coordinate[1] + 1);
-        int left = getCoordinateValue(matrix, coordinate[0]-1, coordinate[1]);
-        int upLeft = getCoordinateValue(matrix, coordinate[0]- 1, coordinate[1] - 1);
+        long up = getCoordinateValue(matrix, coordinate[0], coordinate[1]-1);
+        long upRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]-1);
+        long right = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]);
+        long downRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]+1);
+        long down = getCoordinateValue(matrix, coordinate[0], coordinate[1]+1);
+        long downLeft = getCoordinateValue(matrix, coordinate[0] - 1, coordinate[1] + 1);
+        long left = getCoordinateValue(matrix, coordinate[0]-1, coordinate[1]);
+        long upLeft = getCoordinateValue(matrix, coordinate[0]- 1, coordinate[1] - 1);
 
         sum += up + upRight + right + downRight + down + downLeft + left + upLeft;
 
-        return (sum.equals(0)) ? 1 : sum;
+        return (sum.equals(0l)) ? 1l : sum;
     }
 
-    private int getCoordinateValue(int[][] matrix, int x, int y) {
+    private long getCoordinateValue(long[][] matrix, int x, int y) {
         try {
             // if we want to retrieve a coordinate which doesn't exist we assume it's value is 0
             return matrix[x][y];
