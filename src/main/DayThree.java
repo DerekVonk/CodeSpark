@@ -1,11 +1,12 @@
 package main;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 public class DayThree {
 
     private int[][] spiralMatrix;
-    private long[][] longSpiralMatrix;
+    private BigInteger[][] bigIntSpiralMatrix;
     private int[][] coordinates;
     private int[][] secondMatrixCoordinates;
 
@@ -113,10 +114,12 @@ public class DayThree {
     private int[] locateCoordinate(int value) throws NullPointerException {
         int[] result = null;
 
-        for (int i = 0; i < spiralMatrix.length; i++) {
-            for (int j = 0; j < spiralMatrix.length; j++) {
+        for (int i = 0; i < bigIntSpiralMatrix.length; i++) {
+            for (int j = 0; j < bigIntSpiralMatrix.length; j++) {
 
-                if (spiralMatrix[i][j] == value) {
+                BigInteger bigInteger = BigInteger.valueOf(value);
+                int a = 0;
+                if (bigIntSpiralMatrix[i][j].equals(BigInteger.valueOf(value))) {
                     return new int[] {i, j};
                 }
             }
@@ -144,37 +147,38 @@ public class DayThree {
         return builder.toString();
     }
 
-    private long[][] clearGrid(int n) {
+    private BigInteger[][] clearGrid(int n) {
         spiralMatrix = new int[n][n];
 
-        longSpiralMatrix = new long[n][n];
+        bigIntSpiralMatrix = new BigInteger[n][n];
 
         for (int i = 0; i < spiralMatrix.length; i++) {
             for (int j = 0; j < spiralMatrix[i].length; j++) {
 
-                longSpiralMatrix[i][j] = spiralMatrix[i][j];
+                bigIntSpiralMatrix[i][j] = BigInteger.valueOf(spiralMatrix[i][j]);
 
             }
         }
 
-        return longSpiralMatrix;
+        System.out.println("Grid cleared...");
+        return bigIntSpiralMatrix;
 
     }
 
-    public int getFirstValueLarger(int input) {
-        long[][] longs = clearGrid(spiralMatrix.length);
+    public BigInteger getFirstValueLarger(int input) {
+        BigInteger[][] longs = clearGrid(spiralMatrix.length);
 
-        initSecondMatrix(longs);
+        bigIntSpiralMatrix = initSecondMatrix(longs);
 
         int[] coordinate = locateCoordinate(input);
 
         int[] nextCoordinate = null;
-        int result = 0;
+        BigInteger result = BigInteger.valueOf(0l);
         for (int i = 0; i < secondMatrixCoordinates.length; i++) {
 
             if (Arrays.equals(coordinate, secondMatrixCoordinates[i])) {
                 nextCoordinate = secondMatrixCoordinates[i+1];
-                result = spiralMatrix[nextCoordinate[0]][nextCoordinate[1]];
+                result = BigInteger.valueOf(spiralMatrix[nextCoordinate[0]][nextCoordinate[1]]);
             }
 
         }
@@ -182,12 +186,12 @@ public class DayThree {
         return result;
     }
 
-    private long[][] initSecondMatrix(long[][] spiralMatrix) {
+    private BigInteger[][] initSecondMatrix(BigInteger[][] spiralMatrix) {
 
         int x = 0; // current position; x
         int y = 0; // current position; y
         int[] direction = {1,0}; // direction is to the right
-        long value = 1; // current value being inserted
+        BigInteger value = BigInteger.valueOf(1); // current value being inserted
         int nextValue = 1;
 
         // determine starting coordinate for matrix
@@ -236,7 +240,7 @@ public class DayThree {
                         y = nextCoordinate[1];
 
                         // calculate next value;
-                        value = sumOfAdjacentSquares(longSpiralMatrix, nextCoordinate);
+                        value = (sumOfAdjacentSquares(bigIntSpiralMatrix, nextCoordinate));
                     }
 
                     // rotate matrix after steps have completed
@@ -250,30 +254,37 @@ public class DayThree {
         return spiralMatrix;
     }
 
-    private long sumOfAdjacentSquares(long[][] matrix, int[] coordinate) {
+    private BigInteger sumOfAdjacentSquares(BigInteger[][] matrix, int[] coordinate) {
+        BigInteger up = (getCoordinateValue(matrix, coordinate[0], coordinate[1]-1));
+        BigInteger upRight = (getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]-1));
+        BigInteger right = (getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]));
+        BigInteger downRight = (getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]+1));
+        BigInteger down = (getCoordinateValue(matrix, coordinate[0], coordinate[1]+1));
+        BigInteger downLeft = (getCoordinateValue(matrix, coordinate[0] - 1, coordinate[1] + 1));
+        BigInteger left = (getCoordinateValue(matrix, coordinate[0]-1, coordinate[1]));
+        BigInteger upLeft = (getCoordinateValue(matrix, coordinate[0]- 1, coordinate[1] - 1));
 
-        Long sum = 0l;
+        BigInteger sum = BigInteger.valueOf(0l);
 
-        long up = getCoordinateValue(matrix, coordinate[0], coordinate[1]-1);
-        long upRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]-1);
-        long right = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]);
-        long downRight = getCoordinateValue(matrix, coordinate[0]+1, coordinate[1]+1);
-        long down = getCoordinateValue(matrix, coordinate[0], coordinate[1]+1);
-        long downLeft = getCoordinateValue(matrix, coordinate[0] - 1, coordinate[1] + 1);
-        long left = getCoordinateValue(matrix, coordinate[0]-1, coordinate[1]);
-        long upLeft = getCoordinateValue(matrix, coordinate[0]- 1, coordinate[1] - 1);
+        sum = up.add(upRight)
+                .add(right)
+                .add(downRight)
+                .add(down)
+                .add(downLeft)
+                .add(left)
+                .add(upLeft);
 
-        sum += up + upRight + right + downRight + down + downLeft + left + upLeft;
+        //        up + upRight + right + downRight + down + downLeft + left + upLeft
 
-        return (sum.equals(0l)) ? 1l : sum;
+        return (sum.equals(0l)) ? BigInteger.valueOf(1l) : sum;
     }
 
-    private long getCoordinateValue(long[][] matrix, int x, int y) {
+    private BigInteger getCoordinateValue(BigInteger[][] matrix, int x, int y) {
         try {
             // if we want to retrieve a coordinate which doesn't exist we assume it's value is 0
             return matrix[x][y];
         } catch (IndexOutOfBoundsException e){
-            return 0;
+            return BigInteger.valueOf(0);
         }
 
     }
