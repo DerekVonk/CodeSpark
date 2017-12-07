@@ -111,7 +111,8 @@ public class DayThree {
         return Math.abs(coordinate[0] - x) + Math.abs(coordinate[1]-y);
     }
 
-    private int[] locateCoordinate(int value) throws NullPointerException {
+    // not very OO, but refactoring can come later...
+    private int[] locateCoordinateBI(int value) throws NullPointerException {
         int[] result = null;
 
         for (int i = 0; i < bigIntSpiralMatrix.length; i++) {
@@ -120,6 +121,20 @@ public class DayThree {
                 BigInteger bigInteger = BigInteger.valueOf(value);
                 int a = 0;
                 if (bigIntSpiralMatrix[i][j].equals(BigInteger.valueOf(value))) {
+                    return new int[] {i, j};
+                }
+            }
+        }
+        return result;
+    }
+
+    private int[] locateCoordinate(int value) throws NullPointerException {
+        int[] result = null;
+
+        for (int i = 0; i < spiralMatrix.length; i++) {
+            for (int j = 0; j < spiralMatrix.length; j++) {
+
+                if (spiralMatrix[i][j] == value) {
                     return new int[] {i, j};
                 }
             }
@@ -152,8 +167,8 @@ public class DayThree {
 
         bigIntSpiralMatrix = new BigInteger[n][n];
 
-        for (int i = 0; i < spiralMatrix.length; i++) {
-            for (int j = 0; j < spiralMatrix[i].length; j++) {
+        for (int i = 0; i < bigIntSpiralMatrix.length; i++) {
+            for (int j = 0; j < bigIntSpiralMatrix[i].length; j++) {
 
                 bigIntSpiralMatrix[i][j] = BigInteger.valueOf(spiralMatrix[i][j]);
 
@@ -170,7 +185,7 @@ public class DayThree {
 
         bigIntSpiralMatrix = initSecondMatrix(longs);
 
-        int[] coordinate = locateCoordinate(input);
+        int[] coordinate = locateCoordinateBI(input);
 
         int[] nextCoordinate = null;
         BigInteger result = BigInteger.valueOf(0l);
@@ -178,7 +193,8 @@ public class DayThree {
 
             if (Arrays.equals(coordinate, secondMatrixCoordinates[i])) {
                 nextCoordinate = secondMatrixCoordinates[i+1];
-                result = BigInteger.valueOf(spiralMatrix[nextCoordinate[0]][nextCoordinate[1]]);
+                result = bigIntSpiralMatrix[nextCoordinate[0]][nextCoordinate[1]];
+                break;
             }
 
         }

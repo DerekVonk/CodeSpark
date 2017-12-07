@@ -2,6 +2,8 @@ package main;
 
 import org.junit.Test;
 
+import java.math.BigInteger;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -30,12 +32,12 @@ public class DayThreeTest {
 
     @Test
     public void getFirstValueLarger() {
-        DayThree test = new DayThree(5);
-        assertEquals(4, test.getFirstValueLarger(2));
-//        assertEquals(5, test.getFirstValueLarger(4));
-//        assertEquals(11, test.getFirstValueLarger(10));
-//        assertEquals(59, test.getFirstValueLarger(57));
-//        assertEquals(70, test.getFirstValueLarger(265149));
+        DayThree test = new DayThree(71);
+        assertEquals(BigInteger.valueOf(4), test.getFirstValueLarger(2));
+        assertEquals(BigInteger.valueOf(5), test.getFirstValueLarger(4));
+        assertEquals(BigInteger.valueOf(11), test.getFirstValueLarger(10));
+        assertEquals(BigInteger.valueOf(59), test.getFirstValueLarger(57));
+//        assertEquals(BigInteger.valueOf(70), test.getFirstValueLarger(265149));
     }
 
 }
