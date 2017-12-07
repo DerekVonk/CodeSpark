@@ -39,6 +39,12 @@ public class DayFour {
         }
     }
 
+    /**
+     * checks if the given passphrase is valid.
+     *
+     * @param input Passphrase, is an array of strings
+     * @return return true if no word exists twice in the passphrase and no word is anagram to another
+     */
     public boolean isValidPassphrase(Passphrase input) {
         String[] words = input.words;
         for (int i = 0; i < words.length; i++) {
