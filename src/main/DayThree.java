@@ -118,8 +118,6 @@ public class DayThree {
         for (int i = 0; i < bigIntSpiralMatrix.length; i++) {
             for (int j = 0; j < bigIntSpiralMatrix.length; j++) {
 
-                BigInteger bigInteger = BigInteger.valueOf(value);
-                int a = 0;
                 if (bigIntSpiralMatrix[i][j].equals(BigInteger.valueOf(value))) {
                     return new int[] {i, j};
                 }
