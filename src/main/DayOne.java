@@ -2,10 +2,10 @@ package main;
 
 public class DayOne {
 
-    int[] integers;
-    public int sum;
+    private int[] integers;
+    private int sum;
 
-    public DayOne(String input) {
+    DayOne(String input) {
         this.processInput(input);
     }
 

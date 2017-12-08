@@ -2,7 +2,6 @@ package main;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.IntStream;
 
@@ -23,12 +22,6 @@ public class DayTwo {
     }
 
     private void readFile(String filename) throws IOException {
-//        InputStream stream = ClassLoader.getSystemResourceAsStream(filename);
-//        BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
-
-        // If in the same directory - Probably in your case...
-        // Just comment out the 2 lines above this and uncomment the line
-        // that follows.
         BufferedReader buffer = new BufferedReader(new FileReader(filename));
 
         String line;
@@ -48,7 +41,6 @@ public class DayTwo {
             for (int col = 0; col < size; col++) {
                 spreadsheet[row][col] = Integer.parseInt(vals[col]);
             }
-
             row++;
         }
     }
