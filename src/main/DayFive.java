@@ -9,9 +9,7 @@ import java.util.ArrayList;
 public class DayFive {
 
     final int[] instructions;
-    public static int offset = 0;
-    private static int totalNumberOfJumps = 0;
-    private int currentIndex = 0;
+    private int totalNumberOfJumps = 0;
 
 
 
@@ -20,30 +18,38 @@ public class DayFive {
     }
 
     public int countJumps() {
-        try {
+        int index = 0;
 
-            for (int i = 0; i < instructions.length; i++) {
-
-                int index = goToIndex(offset);
-
-                instructions[i] = offset;
-
-            }
-
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Escaped the maze in " + totalNumberOfJumps + " steps");
-            return totalNumberOfJumps;
+        while (index >= 0 && index < instructions.length) {
+            int move = instructions[index];
+            instructions[index] = instructions[index] + 1;
+            totalNumberOfJumps++;
+            index = index + move;
         }
-        return 0;
+
+        return totalNumberOfJumps;
     }
 
-    private int goToIndex(int index) {
-        System.out.println("current index is " + instructions[index]);
+    private void goToIndex(int index) {
+        System.out.println("current instruction -> move to index " + instructions[index]);
+
+        goToIndex(0);
+    }
+
+
+    private int getInstruction(int index) {
+        System.out.println("getting instruction for index: " + index);
+
+        int temp = instructions[index];
+
+        leaveInstruction(instructions[index], index);
 
         totalNumberOfJumps++;
+        return instructions[temp];
+    }
 
-        return instructions[index];
-
+    private void leaveInstruction(int instruction, int index) {
+        instructions[index] = instruction + 1;
     }
 
     private int[] readArrayFromFile(String filename) {

@@ -12,9 +12,13 @@ public class DayFiveTest {
         assertEquals(5, test.instructions.length);
         assertEquals(5, test.countJumps());
 
+//        DayFive test1 = new DayFive("day5input_test2.txt");
+//        assertEquals(5, test1.instructions.length);
+//        assertEquals(5, test1.countJumps());
+//
 
         DayFive test2 = new DayFive("day5input.txt");
         assertEquals(1097, test2.instructions.length);
-        assertEquals(5, test2.countJumps());
+        assertEquals(396086, test2.countJumps());
     }
 }
