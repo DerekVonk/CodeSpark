@@ -27,7 +27,7 @@ public class DaySix {
 
     private void calculateCycles() {
         // log memory state to memoryLog
-        memoryLog.add(memory);
+        memoryLog.add(Arrays.copyOf(memory, memory.length));
 
         // retrieve number of blocks from memory bank
         int blocks = getNumberOfBlocksFromLargestBank(memory);
@@ -35,16 +35,26 @@ public class DaySix {
         // retrieve index number which holds the largest number of blocks
         int index = getLargestMemoryBlock(blocks);
 
-        // set memory index that holds the most blocks back to zero for redistribution
-        memory[index] = 0;
-
         do {
+            // set memory index that holds the most blocks back to zero for redistribution
+            memory[index] = 0;
+
             // distribute blocks over the other memory banks till all blocks run out
             distributeBlocks(blocks, index);
 
+
+            blocks = getNumberOfBlocksFromLargestBank(memory);
+
+            index = getLargestMemoryBlock(blocks);
+
+            if (memoryStateExists(memory)) {
+                break;
+            }
+
             // log latest state change to memory log
             memoryLog.add(memory);
-        } while (!memoryStateExists(memory));
+
+        } while (true);
 
     }
 
@@ -69,7 +79,8 @@ public class DaySix {
                 index++;
             } else {
                 index = 0;
-                memory[0]++;
+                memory[index]++;
+//                index++;
             }
         }
     }
