@@ -22,7 +22,14 @@ public class DayFive {
 
         while (index >= 0 && index < instructions.length) {
             int move = instructions[index];
-            instructions[index] = instructions[index] + 1;
+
+            // remove if statement for part one of day five answer
+            if (move >= 3) {
+                instructions[index] = instructions[index] - 1;
+            } else {
+                instructions[index] = instructions[index] + 1;
+            }
+
             totalNumberOfJumps++;
             index = index + move;
         }
