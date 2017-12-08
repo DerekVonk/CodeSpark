@@ -10,7 +10,7 @@ public class DayFourTest {
 
     @Test
     public void isValidPassphrase() {
-        DayFour test = new DayFour("puzzleInputD4.txt");
+        DayFour test = new DayFour("test/puzzleInputD4.txt");
 
         ArrayList<Passphrase> list = new ArrayList<>();
         for (Passphrase p : test.input) {
@@ -21,7 +21,7 @@ public class DayFourTest {
 
     @Test
     public void isValidPassphraseAndNotAnagram() {
-        DayFour test = new DayFour("test2InputD4.txt");
+        DayFour test = new DayFour("test/test2InputD4.txt");
 
         ArrayList<Passphrase> list = new ArrayList<>(test.input);
         assertEquals(3, list.size());
