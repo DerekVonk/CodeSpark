@@ -21,7 +21,10 @@ public class Main {
 //        System.out.println("The manhattand distance to the center is " + three.getShortestPath(265149));
 //        three.getFirstValueLarger(265149);
 
-        DayFour four = new DayFour("test/puzzleInputD4.txt");
-        System.out.println("Answer of day four part one is: " + four.input.size());
+//        DayFour four = new DayFour("test/puzzleInputD4.txt");
+//        System.out.println("Answer of day four part one is: " + four.input.size());
+
+        DaySix six = new DaySix(0, 2, 7, 0);
+        System.out.println("Number of cycles: " + six.getRedistributionCycles());
     }
 }
