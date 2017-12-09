@@ -48,7 +48,7 @@ public class FileUtils
      * Open and read a file, and return the lines in the file as a list of
      * Strings.
      */
-    public static List<String> readFileAsListOfStrings(String filename) throws Exception
+    public static List<String> readFileAsListOfStrings(String filename) throws IOException
     {
         List<String> records = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
@@ -56,7 +56,10 @@ public class FileUtils
             while ((line = reader.readLine()) != null) {
                 records.add(line);
             }
-            reader.close();
+        } catch (Exception e) {
+            System.err.format("Exception occurred trying to read '%s'.", filename);
+            e.printStackTrace();
+            return null;
         }
         return records;
     }
