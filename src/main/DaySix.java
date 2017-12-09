@@ -8,7 +8,7 @@ public class DaySix {
 
     int[] memory;
     private ArrayList<int[]> memoryLog;
-    private int redistributionCycles = 0;
+    private int loopCycles;
 
     public DaySix(int... banks) {
         initMemoryBank(banks);
@@ -25,42 +25,49 @@ public class DaySix {
         return memoryLog.size();
     }
 
+    /**
+     * getter fo size of the loop: starting from a state that has already been seen, how many block redistribution cycles
+     * have been performed before that same state is seen again?
+     *
+     * @return int number of cycles
+     */
+    public int getLoopCycles() {
+        return loopCycles;
+    }
+
     private void calculateCycles() {
-        // log memory state to memoryLog
-        memoryLog.add(Arrays.copyOf(memory, memory.length));
-
-        // retrieve number of blocks from memory bank
-        int blocks = getNumberOfBlocksFromLargestBank(memory);
-
-        // retrieve index number which holds the largest number of blocks
-        int index = getLargestMemoryBlock(blocks);
-
+        int blocks;
+        int index;
         do {
+            // log memory state to memoryLog
+            memoryLog.add(Arrays.copyOf(memory, memory.length));
+
+            // retrieve number of blocks from memory bank
+            blocks = getNumberOfBlocksFromLargestBank(memory);
+
+            // retrieve index number which holds the largest number of blocks
+            index = getLargestMemoryBlock(blocks);
+
             // set memory index that holds the most blocks back to zero for redistribution
             memory[index] = 0;
 
             // distribute blocks over the other memory banks till all blocks run out
             distributeBlocks(blocks, index);
 
-
-            blocks = getNumberOfBlocksFromLargestBank(memory);
-
-            index = getLargestMemoryBlock(blocks);
-
+            // if memory state already existed, exit the infinite loop
             if (memoryStateExists(memory)) {
                 break;
             }
 
-            // log latest state change to memory log
-            memoryLog.add(memory);
-
         } while (true);
-
     }
 
-    private boolean memoryStateExists(int[] memory) {
-        for (int[] state : memoryLog) {
-            if (Arrays.equals(memory, state)) {
+    private boolean memoryStateExists(int[] currentMemoryState) {
+        for (int i = 0; i < memoryLog.size(); i++) {
+            if (Arrays.equals(memoryLog.get(i), currentMemoryState)) {
+
+                loopCycles = memoryLog.size() - i;
+
                 return true;
             }
         }
