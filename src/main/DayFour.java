@@ -17,7 +17,7 @@ public class DayFour {
             file = new File(filename);
             FileReader reader = new FileReader(file);
             BufferedReader bReader = new BufferedReader(reader);
-            StringBuffer stringBuffer = new StringBuffer();
+            StringBuilder stringBuffer = new StringBuilder();
             String line;
 
             Passphrase passphrase;
@@ -33,7 +33,6 @@ public class DayFour {
 
             reader.close();
             System.out.println("\nValid lines of input file: " + input.size());
-//            System.out.println(stringBuffer.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
