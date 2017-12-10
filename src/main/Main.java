@@ -31,6 +31,6 @@ public class Main {
 //        System.out.println("Number of cycles: " + six.getRedistributionCycles());
 
         DaySeven partOne = new DaySeven("test/day7input_test.txt");
-        partOne.initProgramList();
+
     }
 }
