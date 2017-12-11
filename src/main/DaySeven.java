@@ -105,7 +105,7 @@ public class DaySeven extends FileUtils {
         return edges;
     }
 
-    public String getBaseProgram() {
+    public String getBaseProgram() throws Exception {
 
         ArrayList<String> names = new ArrayList<>();
         ArrayList<String> supporting = new ArrayList<>();
@@ -127,6 +127,6 @@ public class DaySeven extends FileUtils {
             }
         }
 
-        return null;
+        throw new Exception("No root program found!");
     }
 }
