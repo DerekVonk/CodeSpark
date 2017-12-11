@@ -3,10 +3,7 @@ package main;
 import utility.FileUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class DaySeven extends FileUtils {
 
@@ -23,18 +20,23 @@ public class DaySeven extends FileUtils {
     private HashMap<Program, List<Edge>> initHashMap() {
         HashMap<Program, List<Edge>> result = new HashMap();
 
-        // insert into hashmap a key-value pair of each Program that has connected programs and with
-        // a particular weight.
-
         for (Program program : programs) {
             if (program.isHasDisk()) {
-
-                result.put(program, program.getBalancingPrograms(programs));
-
+                result.put(program, getEdgePrograms(program, programs));
             }
         }
 
         return result;
+    }
+
+    private ArrayList<Edge> sortEdges() {
+        ArrayList<Edge> sortedEdges = new ArrayList<>();
+        for (List<Edge> connectedEdges : adj.values()) {
+            sortedEdges.addAll(connectedEdges);
+        }
+        Collections.sort(sortedEdges);
+
+        return sortedEdges;
     }
 
     private List<Program> initProgramList() {
@@ -49,12 +51,6 @@ public class DaySeven extends FileUtils {
             }
             System.out.println(program.toString());
         }
-
-        ArrayList<Edge> sortedEdges = new ArrayList<>();
-        for (List<Edge> connectedEdges : adj.values()) {
-            sortedEdges.addAll(connectedEdges);
-        }
-        Collections.sort(sortedEdges);
 
         return programs;
     }
@@ -91,4 +87,26 @@ public class DaySeven extends FileUtils {
         return false;
     }
 
+    private List<Edge> getEdgePrograms(Program firstProgram, List<Program> programs) {
+        List<Edge> edges = new ArrayList<>();
+
+        Edge e = null;
+        String[] balancingPrograms = firstProgram.getBalancingPrograms();
+        for (int i = 0; i < balancingPrograms.length; i++) {
+            for (Program secondProgram : programs) {
+                if (balancingPrograms[i].equalsIgnoreCase(secondProgram.getName())) {
+
+                    e = new Edge(firstProgram, secondProgram, firstProgram.getWeight());
+                    edges.add(e);
+                    break;
+                }
+            }
+        }
+        return edges;
+    }
+
+    public Program getBaseProgram() {
+        ArrayList<Edge> edges = sortEdges();
+        return edges.get(0).first;
+    }
 }

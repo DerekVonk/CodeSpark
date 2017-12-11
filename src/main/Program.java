@@ -22,7 +22,7 @@ public class Program {
         }
     }
 
-    // figure out when program has number 1!
+    // figure out when program has number higher number than 0!
     public Program(int number, String n, int w, boolean d, String[] bps) {
         this.number = number;
         this.name = n;
@@ -31,6 +31,14 @@ public class Program {
         if (hasDisk) {
             balancingPrograms = bps;
         }
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -45,15 +53,8 @@ public class Program {
         return hasDisk;
     }
 
-    public List<Edge> getBalancingPrograms(List<Program> programs) {
-        List<Edge> edges = new ArrayList<>();
-
-        for (Program p : programs) {
-
-
-
-        }
-        return edges;
+    public String[] getBalancingPrograms() {
+        return balancingPrograms;
     }
 
     @Override
