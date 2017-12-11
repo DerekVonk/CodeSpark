@@ -1,6 +1,11 @@
 package main;
 
+import utility.BinaryTree;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Main {
 
@@ -31,6 +36,8 @@ public class Main {
 //        System.out.println("Number of cycles: " + six.getRedistributionCycles());
 
         DaySeven partOne = new DaySeven("test/day7input_test.txt");
+        String baseProgram = partOne.getBaseProgram();
+        System.out.println(baseProgram);
 
     }
 }

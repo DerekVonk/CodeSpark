@@ -49,7 +49,7 @@ public class DaySeven extends FileUtils {
             if (!programExists(programs, program)) {
                 programs.add(program);
             }
-            System.out.println(program.toString());
+//            System.out.println(program.toString());
         }
 
         return programs;
@@ -105,8 +105,28 @@ public class DaySeven extends FileUtils {
         return edges;
     }
 
-    public Program getBaseProgram() {
-        ArrayList<Edge> edges = sortEdges();
-        return edges.get(0).first;
+    public String getBaseProgram() {
+
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<String> supporting = new ArrayList<>();
+
+        for (Program program : programs) {
+            names.add(program.getName());
+        }
+
+        for (Program program : programs) {
+            String[] balancingPrograms = program.getBalancingPrograms();
+            for (String balancingProgram : balancingPrograms) {
+                supporting.add(balancingProgram);
+            }
+        }
+
+        for (String name : names) {
+            if (!supporting.contains(name)) {
+                return name;
+            }
+        }
+
+        return null;
     }
 }
