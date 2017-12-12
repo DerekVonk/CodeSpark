@@ -21,11 +21,10 @@ public class DaySeven extends FileUtils {
         HashMap<Program, List<Edge>> result = new HashMap();
 
         for (Program program : programs) {
-            if (program.isHasDisk()) {
+            if (program.hasDisk()) {
                 result.put(program, getEdgePrograms(program, programs));
             }
         }
-
         return result;
     }
 
@@ -46,36 +45,51 @@ public class DaySeven extends FileUtils {
         for (String line : fileContents) {
             program = getProgramFromLine(line);
 
-            if (!programExists(programs, program)) {
-                programs.add(program);
-            }
+            programs.add(program);
+
 //            System.out.println(program.toString());
+        }
+
+        for (Program program1 : programs) {
+            System.out.print("Program " + program1.getName() + ": total weight of " + getTotalWeight(program1));
+            if (!isBalanced(program1)) {
+                System.out.println("NOT BALANCED!");
+            }
         }
 
         return programs;
     }
 
     private Program getProgramFromLine(String line) {
+        Program p = null;
+
         // split line into separate strings by removing non-word characters or non-number characters
         String[] split = line.split("\\s*[^a-z|0-9]+\\s*");
 
         String name = split[0];
         int weight = Integer.parseInt(split[1]);
         boolean hasDisk = false;
-        String[] balancingPrograms = null;
+        ArrayList<String> balancingPrograms = new ArrayList<>();
 
         if (split.length > 2) {
             hasDisk = true;
 
-            balancingPrograms = new String[split.length - 2];
-
             // retrieve other program names
             for (int i = 2, j = 0; i < split.length; i++, j++) {
-                balancingPrograms[j] = split[i];
+                balancingPrograms.add(split[i]);
             }
         }
 
         return new Program(name, weight, hasDisk, balancingPrograms);
+    }
+
+    private Program getProgram(List<Program> programs, String name) {
+        for (Program program : programs) {
+            if (program.getName().equals(name)) {
+                return program;
+            }
+        }
+        return null;
     }
 
     private boolean programExists(List<Program> programs, Program p) {
@@ -91,10 +105,11 @@ public class DaySeven extends FileUtils {
         List<Edge> edges = new ArrayList<>();
 
         Edge e = null;
-        String[] balancingPrograms = firstProgram.getBalancingPrograms();
-        for (int i = 0; i < balancingPrograms.length; i++) {
+        ArrayList<String> balancingPrograms = firstProgram.getBalancingPrograms();
+        for (int i = 0; i < balancingPrograms.size(); i++) {
             for (Program secondProgram : programs) {
-                if (balancingPrograms[i].equalsIgnoreCase(secondProgram.getName())) {
+
+                if (balancingPrograms.get(i).equalsIgnoreCase(secondProgram.getName())) {
 
                     e = new Edge(firstProgram, secondProgram, firstProgram.getWeight());
                     edges.add(e);
@@ -115,9 +130,11 @@ public class DaySeven extends FileUtils {
         }
 
         for (Program program : programs) {
-            String[] balancingPrograms = program.getBalancingPrograms();
-            for (String balancingProgram : balancingPrograms) {
-                supporting.add(balancingProgram);
+            if (program.getBalancingPrograms() != null) {
+                ArrayList<String> balancingPrograms = program.getBalancingPrograms();
+                for (String balancingProgram : balancingPrograms) {
+                    supporting.add(balancingProgram);
+                }
             }
         }
 
@@ -129,4 +146,26 @@ public class DaySeven extends FileUtils {
 
         throw new Exception("No root program found!");
     }
+
+    public int getTotalWeight(Program program) {
+        int totalWeight = program.getWeight();
+
+        if (program.hasDisk()) {
+            // get supporting programs weight
+            for (String s : program.getBalancingPrograms()) {
+                totalWeight += (getProgram(programs, s)).getWeight();
+            }
+        }
+
+        return totalWeight;
+    }
+
+    public boolean isBalanced(Program program) {
+        boolean result = false;
+
+
+
+        return result;
+    }
+
 }

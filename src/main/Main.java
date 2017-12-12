@@ -35,7 +35,7 @@ public class Main {
 //        DaySix six = new DaySix(0, 2, 7, 0);
 //        System.out.println("Number of cycles: " + six.getRedistributionCycles());
 
-        DaySeven partOne = new DaySeven("test/day7input_test.txt");
+        DaySeven partOne = new DaySeven("test/day7input.txt");
         String baseProgram = partOne.getBaseProgram();
         System.out.println(baseProgram);
 

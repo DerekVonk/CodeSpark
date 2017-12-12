@@ -1,19 +1,16 @@
 package main;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Program {
 
-    private int number;
     private String name;
     private int weight;
     private boolean hasDisk;
-    private String[] balancingPrograms = new String[] {};
+    private ArrayList<String> balancingPrograms;
 
-    public Program(String n, int w, boolean d, String[] bps) {
-        this.number = 0;
+    public Program(String n, int w, boolean d, ArrayList<String> bps) {
         this.name = n;
         this.weight = w;
         this.hasDisk = d;
@@ -22,23 +19,28 @@ public class Program {
         }
     }
 
-    // figure out when program has number higher number than 0!
-    public Program(int number, String n, int w, boolean d, String[] bps) {
-        this.number = number;
-        this.name = n;
-        this.weight = w;
-        this.hasDisk = d;
-        if (hasDisk) {
-            balancingPrograms = bps;
-        }
+    public Program(String n, int w, boolean d) {
+        this(n, w, d, new ArrayList<>());
     }
 
-    public int getNumber() {
-        return number;
+    public Program(String n) {
+        this(n, 0, false,null);
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setHasDisk(boolean hasDisk) {
+        this.hasDisk = hasDisk;
+    }
+
+    public void setBalancingPrograms(ArrayList<String> balancingPrograms) {
+        this.balancingPrograms = balancingPrograms;
     }
 
     public String getName() {
@@ -49,11 +51,11 @@ public class Program {
         return weight;
     }
 
-    public boolean isHasDisk() {
+    public boolean hasDisk() {
         return hasDisk;
     }
 
-    public String[] getBalancingPrograms() {
+    public ArrayList<String> getBalancingPrograms() {
         return balancingPrograms;
     }
 
@@ -68,10 +70,10 @@ public class Program {
 
         if (this.hasDisk) {
             builder.append(" -> ");
-            for (int i = 0; i < balancingPrograms.length; i++) {
-                builder.append(balancingPrograms[i]);
+            for (int i = 0; i < balancingPrograms.size(); i++) {
+                builder.append(balancingPrograms.get(i));
 
-                if (i != balancingPrograms.length -1) {
+                if (i != balancingPrograms.size() -1) {
                     builder.append(", ");
                 }
             }
@@ -84,15 +86,13 @@ public class Program {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Program program = (Program) o;
-        return getWeight() == program.getWeight() &&
-                isHasDisk() == program.isHasDisk() &&
+        return
                 Objects.equals(getName(), program.getName());
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(getName(), getWeight(), isHasDisk());
+        return Objects.hash(getName(), getWeight(), hasDisk());
     }
-
 }
