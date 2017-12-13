@@ -39,5 +39,8 @@ public class Main {
         String baseProgram = partOne.getBaseProgram();
         System.out.println(baseProgram);
 
+        DayEight partOne8 = new DayEight("test/day8input.txt");
+
+
     }
 }
