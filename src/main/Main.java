@@ -35,12 +35,13 @@ public class Main {
 //        DaySix six = new DaySix(0, 2, 7, 0);
 //        System.out.println("Number of cycles: " + six.getRedistributionCycles());
 
-        DaySeven partOne = new DaySeven("test/day7input.txt");
-        String baseProgram = partOne.getBaseProgram();
-        System.out.println(baseProgram);
+//        DaySeven partOne = new DaySeven("test/day7input.txt");
+//        String baseProgram = partOne.getBaseProgram();
+//        System.out.println(baseProgram);
+//
+//        DayEight partOne8 = new DayEight("test/day8input.txt");
 
-        DayEight partOne8 = new DayEight("test/day8input.txt");
-
+        DayNine partOne = new DayNine("test/day9input_test.txt");
 
     }
 }
