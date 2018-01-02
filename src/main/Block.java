@@ -1,5 +1,7 @@
 package main;
 
+import utils.StringUtil;
+
 import java.util.Date;
 
 public class Block {
@@ -14,6 +16,16 @@ public class Block {
         this.data = data;
         this.previousHash = previousHash;
         this.timestamp = new Date().getTime();
+        this.hash = calculateHash();
+    }
+
+    // calculate hash from all parts of the block we don't want tampered with
+    public String calculateHash() {
+        String calculatedHash = StringUtil.applySha256(
+                previousHash + Long.toString(timestamp) + data
+        );
+
+        return calculatedHash;
     }
 
 
