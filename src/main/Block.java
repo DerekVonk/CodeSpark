@@ -8,6 +8,11 @@ public class Block {
 
     public String hash;
     public String previousHash;
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
     private String data; // our data will be a simple message for now
     private long timestamp; // as a number of milliseconds since 1/1/1970
 

@@ -6,7 +6,7 @@ import com.google.gson.GsonBuilder;
 public class VonkChain {
 
     public static ArrayList<Block> blockchain = new ArrayList<>();
-    public static int difficulty = 5;
+    public static int difficulty = 1;
 
     public static void main(String[] args) {
 
@@ -19,6 +19,9 @@ public class VonkChain {
         blockchain.add(new Block("adding some more data", blockchain.get(blockchain.size()-1).hash));
         System.out.println("Trying to Mine block 2... ");
         blockchain.get(1).mineBlock(difficulty);
+
+        // corrupt the chain:
+        // blockchain.get(1).setData("this is the new data");
 
         blockchain.add(new Block("this is going marvelously", blockchain.get(blockchain.size()-1).hash));
         System.out.println("Trying to Mine block 3... ");
