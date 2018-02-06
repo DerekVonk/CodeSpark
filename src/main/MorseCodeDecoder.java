@@ -3,6 +3,7 @@ package main;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -19,59 +20,83 @@ public class MorseCodeDecoder {
 
 
     public static String decodeBits(String bits) {
-        // remove starting zero's
-        while (bits.charAt(0) == '0') {
-            bits = bits.substring(1);
+        bits = removeStartingZeros(bits);
+        bits = removeTrailingZeros(bits);
+        StringBuilder result = new StringBuilder();
+
+//        int ones = 0;
+//        int zeros = 0;
+//        for (String s : bits.split("")) {
+//            if (s.equalsIgnoreCase("1")) ones++;
+//            if (s.equalsIgnoreCase("0")) zeros++;
+//        }
+//
+//        final int frequency = zeros - ones > 0 ? zeros - ones : ones - zeros;
+
+        int count = 1;
+        ListIterator<String> characters = Arrays.stream(bits.split("")).collect(Collectors.toList()).listIterator();
+
+        characters.next();
+        while(characters.hasNext()) {
+//            int nextIndex = characters.nextIndex();
+            if (characters.previous().equals(characters.next())) {
+                count++;
+            } else {
+                result.append(decodeCharacter(characters.next(), count));
+                count = 0;
+            }
+            characters.remove();
+            characters.next();
         }
 
+//        int size = characters.size();
+//        int limit = size / frequency + Math.min(size % frequency, 1);
+//        List<String> collectedChars = Stream.iterate(characters, l -> l.subList(frequency, l.size()))
+//                .limit(limit)
+//                .map(l -> l.get(0))
+//                .collect(Collectors.toList());
+
+
+        return result.toString();
+    }
+
+    private static String decodeCharacter(String bit, int count) {
+
+        if (count % 7 == 0) {
+            return "   "; // pause between words
+        }
+
+        if (bit.equals("1")) {
+            if (count % 3 == 0) {
+                return "-"; // dash
+            } else {
+                return "."; // dot
+            }
+
+        } else {
+            if (count % 3 == 0) {
+                return " "; // pause between characters
+            } else {
+                return ""; // pause between dots and dashes
+            }
+        }
+
+    }
+
+    public static String removeTrailingZeros(String bits) {
         // remove trailing zero's
         while (bits.charAt(bits.length() - 1) == '0') {
             bits = bits.substring(0, bits.length() - 1);
         }
+        return bits;
+    }
 
-        String result = "";
-
-        int ones = 0;
-        int zeros = 0;
-        for (String s : bits.split("")) {
-            if (s.equalsIgnoreCase("1")) ones++;
-            if (s.equalsIgnoreCase("0")) zeros++;
+    public static String removeStartingZeros(String bits) {
+        // remove starting zero's
+        while (bits.charAt(0) == '0') {
+            bits = bits.substring(1);
         }
-
-//        int frequency = bits.length() % zeros;
-        final int frequency = zeros - ones > 0 ? zeros - ones : ones - zeros;
-
-        List<String> characters = Arrays.stream(bits.split("")).collect(Collectors.toList());
-
-        int size = characters.size();
-        int limit = size / frequency + Math.min(size % frequency, 1);
-        List<String> collectedChars = Stream.iterate(characters, l -> l.subList(frequency, l.size()))
-                .limit(limit)
-                .map(l -> l.get(0))
-                .collect(Collectors.toList());
-
-        int count = 0;
-        int tu = 0;
-        for (int i = 0; i < collectedChars.size(); ) {
-            String current = collectedChars.get(i);
-            
-            i = i - count;
-
-            if (tu == 1 && current.equals("1")) {
-                result += ".";
-            } else if (tu == 3 && current.equals("1")) {
-                result += "-";
-            } else if (tu == 7 && current.equals("0")) {
-                result += "   ";
-//            } else if (tu == 1 && current.equals("0")) {
-//                result += "";
-            } else if (tu == 3 && current.equals("0")) {
-                result += " ";
-            }
-
-        }
-
-        return result;
+        return bits;
     }
 
     public static String decode(String morseCode) {
