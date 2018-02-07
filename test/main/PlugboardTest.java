@@ -8,9 +8,9 @@ public class PlugboardTest {
     public void testValidPlugboard() throws InvalidPlugboardWiresException {
         Plugboard plugboard = new Plugboard("AB");
         assertEquals("B", plugboard.process("A"));
+        assertEquals(".", plugboard.process("."));
         assertEquals("A", plugboard.process("B"));
         assertEquals("C", plugboard.process("C"));
-        assertEquals(".", plugboard.process("."));
     }
 
     @Test(expected = InvalidPlugboardWiresException.class)
