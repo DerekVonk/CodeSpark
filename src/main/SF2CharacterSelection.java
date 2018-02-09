@@ -22,23 +22,27 @@ public class SF2CharacterSelection {
             int[] selection = select.get(move);
 
             try {
+                // allow for circular movements on rows
+                if (move.equalsIgnoreCase("LEFT") && position[0] == 0) {
+                    position[0] = fighters[0].length;
 
-                if (move.equalsIgnoreCase("LEFT") | move.equalsIgnoreCase("RIGHT")) {
-
-
+                } else if (move.equalsIgnoreCase("RIGHT") && position[0] == fighters[0].length - 1) {
+                    position[0] = -1;
 
                 }
-                selectionHistory.add(fighters[position[0] + selection[0]][position[1] + selection[1]]);
+
+                selectionHistory.add(fighters[position[1] + selection[1]][position[0] + selection[0]]);
                 position[0] += selection[0];
                 position[1] += selection[1];
 
+            // only up or down movements should throw an AIOOBE
             } catch (ArrayIndexOutOfBoundsException e) {
                 selectionHistory.add(fighters[position[0]][position[1]]);
             }
 
         }
 
-        return (String[]) selectionHistory.toArray();
+        return selectionHistory.toArray(new String[0]);
 
     }
 }
