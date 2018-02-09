@@ -1,25 +1,40 @@
 package main;
 
-import javax.swing.plaf.basic.BasicSplitPaneUI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SF2CharacterSelection {
 
-    private final static int[] UP = {0, 1};
-    private final static int[] DOWN = {0, -1};
-    private final static int[] RIGHT = {1, 0};
-    private final static int[] LEFT = {-1, 0};
+    private static final Map<String, int[]> select = new HashMap();
 
-    private static final int[][] select = new int[4][{},{},{},{}]
+    static {
+        select.put("up", new int[] {0, -1});
+        select.put("down", new int[] {0, 1});
+        select.put("right", new int[] {1, 0});
+        select.put("left", new int[] {-1, 0});
+    }
 
     public static String[] streetFighterSelection(String[][] fighters, int[] position, String[] moves){
         ArrayList<String> selectionHistory = new ArrayList<>();
 
-        try {
-            for (String move : moves) {
+        for (String move : moves) {
+            int[] selection = select.get(move);
 
+            try {
+
+                if (move.equalsIgnoreCase("LEFT") | move.equalsIgnoreCase("RIGHT")) {
+
+
+
+                }
+                selectionHistory.add(fighters[position[0] + selection[0]][position[1] + selection[1]]);
+                position[0] += selection[0];
+                position[1] += selection[1];
+
+            } catch (ArrayIndexOutOfBoundsException e) {
+                selectionHistory.add(fighters[position[0]][position[1]]);
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
 
         }
 
