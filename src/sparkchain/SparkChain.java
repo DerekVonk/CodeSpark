@@ -1,9 +1,9 @@
-package main;
+package sparkchain;
 
 import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
 
-public class VonkChain {
+public class SparkChain {
 
     public static ArrayList<Block> blockchain = new ArrayList<>();
     public static int difficulty = 1;
