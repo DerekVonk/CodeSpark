@@ -11,7 +11,7 @@ public class Transaction {
     public PublicKey sender; // the public key/address of the sender
     public PublicKey receiver; // the public key/address of the receiver
     public float value; // the amount of coin in the transaction
-    public byte[] signiture; // this is to prevent anyone else spending funds in our wallet
+    public byte[] signature; // this is to prevent anyone else spending funds in our wallet
 
     public ArrayList<TransactionInput> inputs;
     public ArrayList<TransactionOutput> ouputs = new ArrayList<>();
@@ -33,5 +33,16 @@ public class Transaction {
                         StringUtil.getStringFromKey(receiver) +
                         Float.toString(value) + sequence
         );
+    }
+
+    //Signs all the data we dont wish to be tampered with.
+    public void generateSignature(PrivateKey privateKey) {
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value)	;
+        signature = StringUtil.applyECDSASig(privateKey,data);
+    }
+    //Verifies the data we signed hasnt been tampered with
+    public boolean verifiySignature() {
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value)	;
+        return StringUtil.verifyECDSASig(sender, data, signature);
     }
 }
