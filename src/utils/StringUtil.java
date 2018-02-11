@@ -6,6 +6,8 @@ import java.util.Base64;
 
 public class StringUtil {
 
+    private StringUtil() {}
+
     //applies Sha256 to a String and returns the result
     public static String applySha256(String input) {
 
@@ -14,9 +16,9 @@ public class StringUtil {
 
             //Applies sha256 to our input
             byte[] hash = digest.digest(input.getBytes(StandardCharsets.UTF_8));
-            StringBuffer hexString = new StringBuffer(); // this will contain hash as hexidecimal
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
+            StringBuilder hexString = new StringBuilder(); // this will contain hash as hexidecimal
+            for (byte aHash : hash) {
+                String hex = Integer.toHexString(0xff & aHash);
 
                 if (hex.length() == 1) hexString.append('0');
 
@@ -26,6 +28,7 @@ public class StringUtil {
             return hexString.toString();
 
         } catch (Exception e) {
+            //@TODO define and throw dedicated Exception
             throw new RuntimeException(e);
         }
     }
@@ -44,6 +47,7 @@ public class StringUtil {
             byte[] realSig = dsa.sign();
             output = realSig;
         } catch (Exception e) {
+            //@TODO define and throw dedicated Exception
             throw new RuntimeException(e);
         }
         return output;
@@ -57,6 +61,7 @@ public class StringUtil {
             ecdsaVerify.update(data.getBytes());
             return ecdsaVerify.verify(signature);
         }catch(Exception e) {
+            //@TODO define and throw dedicated Exception
             throw new RuntimeException(e);
         }
     }
