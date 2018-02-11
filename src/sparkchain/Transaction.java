@@ -27,9 +27,10 @@ public class Transaction {
 
     private String calculateHash() {
         sequence++; //increment the sequense to avoid 2 transactions having the same hash
+
         return StringUtil.applySha256(
                 StringUtil.getStringFromKey(sender) +
-                        StringUtil.getStringFromKey(reciepient) +
+                        StringUtil.getStringFromKey(receiver) +
                         Float.toString(value) + sequence
         );
     }
