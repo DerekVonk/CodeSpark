@@ -1,17 +1,37 @@
 package sparkchain;
 
+import java.security.Security;
 import java.util.ArrayList;
 import com.google.gson.GsonBuilder;
+import utils.StringUtil;
 
 public class SparkChain {
 
     public static ArrayList<Block> blockchain = new ArrayList<>();
     public static int difficulty = 1;
+    public static Wallet walletA;
+    public static Wallet walletB;
 
     public static void main(String[] args) {
 
-        // add our blocks to the blockchain
+        //Setup Bouncey castle as a Security Provider
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        //Create the new wallets
+        walletA = new Wallet();
+        walletB = new Wallet();
+        //Test public and private keys
+        System.out.println("Private and public keys:");
+        System.out.println(StringUtil.getStringFromKey(walletA.privateKey));
+        System.out.println(StringUtil.getStringFromKey(walletA.publicKey));
+        //Create a test transaction from WalletA to walletB
+        Transaction transaction = new Transaction(walletA.publicKey, walletB.publicKey, 5, null);
+        transaction.generateSignature(walletA.privateKey);
+        //Verify the signature works and verify it from the public key
+        System.out.println("Is signature verified");
+        System.out.println(transaction.verifiySignature());
 
+        //testing
+        // add our blocks to the blockchain
         blockchain.add(new Block("this is the GENESIS block", "0"));
         System.out.println("Trying to Mine block 1... ");
         blockchain.get(0).mineBlock(difficulty);
@@ -36,6 +56,7 @@ public class SparkChain {
         String blockChainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
         System.out.println("\nThe VonkChain: ");
         System.out.println(blockChainJson);
+
     }
 
     public static Boolean isChainValid() {
