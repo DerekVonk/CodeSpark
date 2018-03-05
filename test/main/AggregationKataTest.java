@@ -58,4 +58,23 @@ public class AggregationKataTest {
 
     }
 
+    @Test
+    public void basicTestGetTheNumberOfStudentsByGenderForEachDepartment() throws Exception {
+
+        Map<String, Map<Student.Gender, Long>> actual = AggregationKata.getTheNumberOfStudentsByGenderForEachDepartment(Arrays.stream(students));
+        Map<String, Map<Student.Gender, Long>> expected = new HashMap<>();
+        Map<Student.Gender, Long> map1 = new HashMap<>();
+        Map<Student.Gender, Long> map2 = new HashMap<>();
+        map1.put(Student.Gender.MALE, 1L);
+        map1.put(Student.Gender.FEMALE, 1L);
+        map2.put(Student.Gender.MALE, 2L);
+        map2.put(Student.Gender.FEMALE, 1L);
+        expected.put("CS", map1);
+        expected.put("Philology", map2);
+
+        assertEquals(expected, actual);
+
+    }
+
+
 }

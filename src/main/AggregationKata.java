@@ -69,4 +69,11 @@ public class AggregationKata {
                         Collectors.mapping(Student::getName, Collectors.toList())
                 ));
         }
+
+    public static Map<String, Map<Student.Gender, Long>> getTheNumberOfStudentsByGenderForEachDepartment(Stream<Student> students) {
+
+        return null;
+
+    }
+
 }
