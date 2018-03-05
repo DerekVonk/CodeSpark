@@ -44,4 +44,18 @@ public class AggregationKataTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void basicTestGetStudentNamesByDepartment() throws Exception {
+
+        Map<String, List<String>> actual = AggregationKata.getStudentNamesByDepartment(Arrays.stream(students));
+        List<String> list1 = new ArrayList<>(Arrays.asList("Galina", "Jack", "Mike"));
+        List<String> list2 = new ArrayList<>(Arrays.asList("Anton", "Jane"));
+        Map<String, List<String>> expected = new HashMap<>();
+        expected.put("Philology", list1);
+        expected.put("CS", list2);
+
+        assertEquals(expected, actual);
+
+    }
+
 }

@@ -1,10 +1,12 @@
 package main;
 
-import java.util.AbstractMap;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 public class AggregationKata {
 
@@ -60,4 +62,11 @@ public class AggregationKata {
                         Collectors.counting()));
     }
 
+    public static Map<String, List<String>> getStudentNamesByDepartment(Stream<Student> students) {
+        return students
+                .collect(Collectors.groupingBy(
+                        Student::getDepartment,
+                        Collectors.mapping(Student::getName, Collectors.toList())
+                ));
+        }
 }
