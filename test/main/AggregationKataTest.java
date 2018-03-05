@@ -33,4 +33,15 @@ public class AggregationKataTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void basicTestGetNumberOfStudentsByDepartment() throws Exception {
+
+        Map<String, Long> actual = AggregationKata.getNumberOfStudentsByDepartment(Arrays.stream(students));
+        Map<String, Long> expected = new HashMap<>();
+        expected.put("CS", 2l);
+        expected.put("Philology", 3l);
+
+        assertEquals(expected, actual);
+    }
+
 }

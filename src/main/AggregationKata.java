@@ -1,6 +1,7 @@
 package main;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -48,7 +49,15 @@ public class AggregationKata {
                 .collect(
                         Collectors.groupingBy(
                                 Student::getDepartment,                             //collect grouping by department
-                                Collectors.averagingDouble(Student::getGrade)));
+                                Collectors.averagingDouble(Student::getGrade))
+                );
+    }
+
+    public static Map<String, Long> getNumberOfStudentsByDepartment(Stream<Student> students) {
+        return students
+                .collect(Collectors.groupingBy(
+                        Student::getDepartment,
+                        Collectors.counting()));
     }
 
 }
