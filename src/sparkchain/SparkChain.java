@@ -1,9 +1,9 @@
 package sparkchain;
 
+import utils.StringUtil;
+
 import java.security.Security;
 import java.util.ArrayList;
-import com.google.gson.GsonBuilder;
-import utils.StringUtil;
 
 public class SparkChain {
 
@@ -29,33 +29,6 @@ public class SparkChain {
         //Verify the signature works and verify it from the public key
         System.out.println("Is signature verified");
         System.out.println(transaction.verifiySignature());
-
-        //testing
-        // add our blocks to the blockchain
-        blockchain.add(new Block("this is the GENESIS block", "0"));
-        System.out.println("Trying to Mine block 1... ");
-        blockchain.get(0).mineBlock(difficulty);
-
-        blockchain.add(new Block("adding some more data", blockchain.get(blockchain.size()-1).hash));
-        System.out.println("Trying to Mine block 2... ");
-        blockchain.get(1).mineBlock(difficulty);
-
-        // corrupt the chain:
-        // blockchain.get(1).setData("this is the new data");
-
-        blockchain.add(new Block("this is going marvelously", blockchain.get(blockchain.size()-1).hash));
-        System.out.println("Trying to Mine block 3... ");
-        blockchain.get(2).mineBlock(difficulty);
-
-        blockchain.add(new Block("on block number 4 now!", blockchain.get(blockchain.size()-1).hash));
-        System.out.println("Trying to Mine block 4... ");
-        blockchain.get(3).mineBlock(difficulty);
-
-        System.out.println("\nVonkchain is valid: " + isChainValid());
-
-        String blockChainJson = new GsonBuilder().setPrettyPrinting().create().toJson(blockchain);
-        System.out.println("\nThe VonkChain: ");
-        System.out.println(blockChainJson);
 
     }
 
