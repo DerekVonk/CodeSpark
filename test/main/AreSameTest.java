@@ -14,6 +14,13 @@ public class AreSameTest {
     }
 
     @Test
+    void testEmptyArrays() {
+        int[] a = new int[]{};
+        int[] b = new int[]{};
+        assertEquals(AreSame.comp(a, b), true);
+    }
+
+    @Test
     void testOneEmptyArray() {
         int[] a = new int[]{121, 144, 19, 161, 19, 144, 19, 11};
         int[] b = new int[]{};

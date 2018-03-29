@@ -7,16 +7,21 @@ import java.util.stream.IntStream;
 public class AreSame {
 
     public static boolean comp(int[] a, int[] b) {
-        double[] aAsDoubles = IntStream.of(a)
-                .mapToDouble(i -> i)
-                .sorted()
-                .toArray();
+        if (a == null || b == null) return false;
+        return Arrays.equals(getSortedDoubles(a), getSquaredAndSortedDoubles(b));
+    }
 
-        double[] bAsDoubles = IntStream.of(b)
-                .mapToDouble(Math::sqrt)
-                .sorted()
-                .toArray();
+    private static double[] getSquaredAndSortedDoubles(int[] inputArray) {
+        return IntStream.of(inputArray)
+                    .mapToDouble(Math::sqrt)
+                    .sorted()
+                    .toArray();
+    }
 
-        return Arrays.equals(aAsDoubles, bAsDoubles);
+    private static double[] getSortedDoubles(int[] numbers) {
+        return IntStream.of(numbers)
+                    .mapToDouble(i -> i)
+                    .sorted()
+                    .toArray();
     }
 }
