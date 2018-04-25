@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
 // Are they the 'same'?
 public class AreSame {
 
+    // not finished, still one test failing. Don't know which one...
     public static boolean comp(int[] a, int[] b) {
         if (a == null || b == null) return false;
         return Arrays.equals(getSortedDoubles(a), getSquaredAndSortedDoubles(b));
