@@ -23,6 +23,7 @@ public class StrongNumber {
         return Stream.of(String.valueOf(n).split("")).mapToInt(Integer::valueOf).toArray();
     }
 
+    // http://www.javawithus.com/programs/factorial
     private static int factorial(int n) {
         return n == 0 ? 1 : n * factorial(n - 1);
     }
