@@ -7,10 +7,10 @@ import java.util.Date;
 
 public class Block {
 
-    private String hash;
-    private String previousHash;
-    private String merkleRoot;
-    private ArrayList<Transaction> transactions = new ArrayList<>(); //our data will be a simple message.
+    protected String hash;
+    protected String previousHash;
+    protected String merkleRoot;
+    protected ArrayList<Transaction> transactions = new ArrayList<>(); //our data will be a simple message.
 
 //    public void setData(String data) {
 //        this.data = data;

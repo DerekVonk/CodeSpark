@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Transaction {
 
-    private String transactionId; //this is also the hash of the transaction
+    public String transactionId; //this is also the hash of the transaction
     public PublicKey sender; // the public key/address of the sender
     public PublicKey receiver; // the public key/address of the receiver
     public float value; // the amount of coin in the transaction
@@ -69,12 +69,12 @@ public class Transaction {
         //generate transaction outputs:
         float leftOver = getInputsValue() - value; //get value of inputs then the left over change:
         transactionId = calculateHash();
-        outputs.add(new TransactionOutput( this.receiver, value,transactionId)); //send value to recipient
-        outputs.add(new TransactionOutput( this.sender, leftOver,transactionId)); //send the left over 'change' back to sender		
+        outputs.add(new TransactionOutput(this.receiver, value, transactionId)); //send value to recipient
+        outputs.add(new TransactionOutput(this.sender, leftOver, transactionId)); //send the left over 'change' back to sender
 
         //add outputs to Unspent list
-        for(TransactionOutput o : outputs) {
-            SparkChain.UTXOs.put(o.id , o);
+        for(TransactionOutput output : outputs) {
+            SparkChain.UTXOs.put(output.id , output);
         }
 
         //remove transaction inputs from UTXO lists as spent:

@@ -34,8 +34,7 @@ public class SparkChain {
         Transaction transaction = new Transaction(walletA.publicKey, walletB.publicKey, 5, null);
         transaction.generateSignature(walletA.privateKey);
         //Verify the signature works and verify it from the public key
-        System.out.println("Is signature verified");
-        System.out.println(transaction.verifiySignature());
+        System.out.println("Is signature verified: " + transaction.verifiySignature());
 
     }
 

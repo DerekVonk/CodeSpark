@@ -4,14 +4,15 @@ import java.security.*;
 import java.security.spec.ECGenParameterSpec;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Wallet {
 
-    private PrivateKey privateKey;
-    private PublicKey publicKey;
+    protected PrivateKey privateKey;
+    protected PublicKey publicKey;
 
-    private Map<String, TransactionOutput> UTXOs = new HashMap<>(); //only UTXOs owned by this wallet.
+    protected HashMap<String, TransactionOutput> UTXOs = new HashMap<>(); //only UTXOs owned by this wallet.
 
     Wallet() {
         generateKeyPair();
@@ -73,6 +74,11 @@ public class Wallet {
             UTXOs.remove(input.transactionOutputId);
         }
         return newTransaction;
+    }
+
+    // add history of transactions in this wallet
+    public List<Transaction> getTransactionHistory() {
+        return null;
     }
 
 }
