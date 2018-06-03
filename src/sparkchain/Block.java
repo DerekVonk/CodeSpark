@@ -16,13 +16,13 @@ public class Block {
 //        this.data = data;
 //    }
 
-    private String data; // our data will be a simple message for now
+//    private String data; // our data will be a simple message for now
     private long timestamp; // as a number of milliseconds since 1/1/1970
 
     private int nonce;
 
     // Constructor
-    public Block(String data, String previousHash) {
+    public Block(String previousHash) {
         this.previousHash = previousHash;
         this.timestamp = new Date().getTime();
         this.hash = calculateHash();
