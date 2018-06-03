@@ -6,7 +6,7 @@ import java.security.PublicKey;
 
 public class TransactionOutput {
     String id;
-    private PublicKey recipient; //also known as the new owner of these coins.
+    protected PublicKey recipient; //also known as the new owner of these coins.
     float value; //the amount of coins they own
     private String parentTransactionId; //the id of the transaction this output was created in
 

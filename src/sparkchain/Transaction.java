@@ -9,7 +9,7 @@ public class Transaction {
 
     public String transactionId; //this is also the hash of the transaction
     public PublicKey sender; // the public key/address of the sender
-    public PublicKey receiver; // the public key/address of the receiver
+    public PublicKey recipient; // the public key/address of the recipient
     public float value; // the amount of coin in the transaction
     public byte[] signature; // this is to prevent anyone else spending funds in our wallet
 
@@ -20,7 +20,7 @@ public class Transaction {
 
     public Transaction(PublicKey from, PublicKey to, float value, ArrayList<TransactionInput> inputs) {
         this.sender = from;
-        this.receiver = to;
+        this.recipient = to;
         this.value = value;
         this.inputs = inputs;
     }
@@ -30,20 +30,20 @@ public class Transaction {
 
         return StringUtil.applySha256(
                 StringUtil.getStringFromKey(sender) +
-                        StringUtil.getStringFromKey(receiver) +
+                        StringUtil.getStringFromKey(recipient) +
                         Float.toString(value) + sequence
         );
     }
 
     //Signs all the data we dont wish to be tampered with.
     public void generateSignature(PrivateKey privateKey) {
-        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value)	;
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient) + Float.toString(value)	;
         signature = StringUtil.applyECDSASig(privateKey,data);
     }
 
     //Verifies the data we signed hasnt been tampered with
     public boolean verifiySignature() {
-        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(receiver) + Float.toString(value)	;
+        String data = StringUtil.getStringFromKey(sender) + StringUtil.getStringFromKey(recipient) + Float.toString(value)	;
         return StringUtil.verifyECDSASig(sender, data, signature);
     }
 
@@ -69,7 +69,7 @@ public class Transaction {
         //generate transaction outputs:
         float leftOver = getInputsValue() - value; //get value of inputs then the left over change:
         transactionId = calculateHash();
-        outputs.add(new TransactionOutput(this.receiver, value, transactionId)); //send value to recipient
+        outputs.add(new TransactionOutput(this.recipient, value, transactionId)); //send value to recipient
         outputs.add(new TransactionOutput(this.sender, leftOver, transactionId)); //send the left over 'change' back to sender
 
         //add outputs to Unspent list
