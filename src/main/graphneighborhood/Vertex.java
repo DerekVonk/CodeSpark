@@ -1,4 +1,4 @@
-package main.GraphNeighborhood;
+package main.graphneighborhood;
 
 class Vertex {
     private final int uid;

@@ -1,4 +1,4 @@
-package main.GraphNeighborhood;
+package main.graphneighborhood;
 
 import java.util.HashSet;
 import java.util.Set;
