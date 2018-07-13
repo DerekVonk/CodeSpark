@@ -30,6 +30,9 @@ public class GraphOperations {
                 .filter(x -> x.getV1().equals(vertex) || x.getV2().equals(vertex))
                 .map(x -> x.getV1().equals(vertex) ? x.getV2() : x.getV1())
                 .collect(Collectors.toSet());
+    }
 
+    public static int hopDistance(Graph graph, Vertex source, Vertex target) {
+        return 1;
     }
 }
