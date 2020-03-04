@@ -7,23 +7,6 @@ import java.util.stream.Collectors;
 public class GraphOperations {
 
     public static Set<Vertex> getNeighbours(Graph graph, Vertex vertex){
-//        Set<Vertex> result = new HashSet<>();
-//        Set<Edge> edges = graph.getEdges();
-//        int vertexUid = vertex.hashCode();
-//
-//        for (Edge e : edges) {
-//            Vertex v1 = e.getV1();
-//            Vertex v2 = e.getV2();
-//
-//            if (v1.hashCode() == vertexUid) {
-//                result.add(v2);
-//            } else if (v2.hashCode() == vertexUid) {
-//                result.add(v1);
-//            }
-//        }
-//
-//        return result;
-
         return graph
                 .getEdges()
                 .stream()
@@ -33,6 +16,25 @@ public class GraphOperations {
     }
 
     public static int hopDistance(Graph graph, Vertex source, Vertex target) {
-        return 1;
+        int hops = 1;
+
+        Set<Vertex> friends = getNeighbours(graph, target);
+        if (friends.contains(target)) {
+            return hops;
+        } else {
+            hops++;
+            Set<Vertex> fofs;
+            for (Vertex friendOfFriend : friends) {
+                fofs = getNeighbours(graph, friendOfFriend);
+                if (fofs.contains(target)) {
+                    return hops;
+                } else {
+                    hops++;
+                }
+            }
+
+        }
+
+        return hops;
     }
 }
