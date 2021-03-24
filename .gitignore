@@ -7,3 +7,7 @@
 *.iml
 output
 gen
+
+
+# MacOS
+.nosync
